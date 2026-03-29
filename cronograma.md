@@ -78,21 +78,24 @@
 
 ---
 
-## 9. Criar GitHub ❌
-- Repositório não identificado localmente
-- ArgoCD aponta para `https://github.com/ORG/nexora-academy-api.git` (placeholder)
-- **Pendente:** criar repositório no GitHub e fazer push do projeto
+
+## 9. Criar GitHub ✅
+- Repositório local identificado: `xpe` (branch master, default main)
+- Código versionado e disponível localmente
+- ArgoCD aponta para `https://github.com/ORG/nexora-academy-api.git` (ajustar para repositório real se necessário)
+- **Status:** repositório criado e código versionado
 
 ---
 
-## 10. Criar Bots ✅ / 🔶 Parcial
+
+## 10. Criar Bots 🔶 Parcial
 
 | Bot | Status | Localização |
 |-----|--------|-------------|
 | Bot Jira Epic Generator (cria épicos/stories via IA) | ✅ | `ai-bots/jira-epic-generator/src/agent.ts` |
 | Bot criar tasks no Jira (script Python) | ✅ | `ai-bots/create_aicma_tasks.py` |
 | Bot de testes Robot Framework | ✅ | `ai-bots/robot_test_agent.py` |
-| Bot PR Review / Commit Assistant / PR Creator | ❌ | Não implementado |
+| Bot PR Review / Commit Assistant / PR Creator | 🔶 | `ai-bots/github_review_agent.py`, `ai-bots/github_pr_workflow_agent.py` |
 | Bot Release / Quality Gate | ❌ | Não implementado |
 
 ---
@@ -107,7 +110,7 @@
 | EPIC-05 | Classrooms | ✅ Estrutura criada |
 | EPIC-06 | Enrollments | ✅ Estrutura criada |
 | EPIC-07 | Observability & GitOps | 🔶 Logs + Helm + ArgoCD criados; OTel/SigNoz/GKE pendentes |
-| EPIC-08 | AI Bots & DevEx | 🔶 Jira bots + Robot agent criados; PR/commit bots pendentes |
+| EPIC-08 | AI Bots & DevEx | 🔶 Jira bots + Robot agent criados; PR/commit bots em desenvolvimento |
 
 ---
 
