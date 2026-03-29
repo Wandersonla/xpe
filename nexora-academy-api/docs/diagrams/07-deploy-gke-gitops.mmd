@@ -1,0 +1,17 @@
+flowchart LR
+  DEV[Developer]
+  GH[GitHub]
+  CI[CI Pipeline]
+  AR[Artifact Registry]
+  CHART[Helm Chart]
+  ARGO[Argo CD]
+  GKE[GKE Cluster]
+  OBS[SigNoz]
+
+  DEV --> GH
+  GH --> CI
+  CI --> AR
+  CI --> CHART
+  CHART --> ARGO
+  ARGO --> GKE
+  GKE --> OBS
