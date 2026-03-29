@@ -1,0 +1,1754 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.4.2 (Python 3.14.3 on darwin)" generated="2026-03-29T11:30:07.262135" rpa="false" schemaversion="5">
+<suite id="s1" name="Robot" source="/Users/cliente/Documents/xpe/nexora-academy-api/tests/robot">
+<suite id="s1-s1" name="Classrooms" source="/Users/cliente/Documents/xpe/nexora-academy-api/tests/robot/classrooms.robot">
+<test id="s1-s1-t1" name="Should List Classrooms Public" line="13">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2026-03-29T11:30:07.360885" level="INFO">Creating Session using : alias=public, url=http://localhost:3000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>public</arg>
+<arg>${BASE_URL}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2026-03-29T11:30:07.360785" elapsed="0.000217"/>
+</kw>
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-03-29T11:30:07.376212" level="INFO">GET Request : url=http://localhost:3000/api/v1/classrooms 
+ path_url=/api/v1/classrooms 
+ headers={'User-Agent': 'python-requests/2.33.0', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2026-03-29T11:30:07.376296" level="INFO">GET Response : url=http://localhost:3000/api/v1/classrooms 
+ status=200, reason=OK 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'x-correlation-id': '1e45f6a8-7ec8-41e2-bcdd-7f4beecf72fd', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '566', 'ETag': 'W/"236-a0vhaE+loiiq5Rxqqzr4HlgFaOw"', 'Date': 'Sun, 29 Mar 2026 14:30:07 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"data":[{"id":"69c9374065a5229cddca1c4b","courseId":"69c9374065a5229cddca1c48","courseTitle":"Curso Para Turma 1774794560","name":"Turma Teste 1774794560","teacherId":null,"teacherName":null,"capacity":30,"enrollmentStart":"2026-04-01T00:00:00.000Z","enrollmentEnd":"2026-04-20T23:59:59.000Z","startAt":"2026-05-01T19:00:00.000Z","endAt":"2026-06-30T22:00:00.000Z","status":"draft","createdAt":"2026-03-29T14:29:20.608Z","updatedAt":"2026-03-29T14:29:20.608Z"}],"meta":{"correlationId":"1e45f6a8-7ec8-41e2-bcdd-7f4beecf72fd","timestamp":"2026-03-29T14:30:07.375Z"}} 
+ </msg>
+<msg time="2026-03-29T11:30:07.376385" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>public</arg>
+<arg>${API_PREFIX}/classrooms</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.361073" elapsed="0.015327"/>
+</kw>
+<kw name="Status Should Be" owner="RequestsLibrary">
+<arg>200</arg>
+<arg>${response}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.376492" elapsed="0.000128"/>
+</kw>
+<tag>classrooms</tag>
+<tag>public</tag>
+<status status="PASS" start="2026-03-29T11:30:07.360336" elapsed="0.016345"/>
+</test>
+<test id="s1-s1-t2" name="Admin Should Create Classroom" line="19">
+<kw name="Get Token" owner="keywords">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.377399" level="INFO">${keycloak_url} = http://localhost:8080/realms/nexora/protocol/openid-connect/token</msg>
+<var>${keycloak_url}</var>
+<arg>http://localhost:8080/realms/nexora/protocol/openid-connect/token</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.377245" elapsed="0.000171"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.377565" level="INFO">${client_id} = nexora-api</msg>
+<var>${client_id}</var>
+<arg>nexora-api</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.377460" elapsed="0.000115"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.377706" level="INFO">${client_secret} = </msg>
+<var>${client_secret}</var>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.377616" elapsed="0.000101"/>
+</kw>
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2026-03-29T11:30:07.377797" level="INFO">Creating Session using : alias=keycloak, url=http://localhost:8080, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>keycloak</arg>
+<arg>http://localhost:8080</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2026-03-29T11:30:07.377756" elapsed="0.000108"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.378055" level="INFO">${data} = grant_type=password&amp;client_id=nexora-api&amp;username=admin@nexora.com&amp;password=admin123</msg>
+<var>${data}</var>
+<arg>grant_type=password&amp;client_id=${client_id}&amp;username=${username}&amp;password=${password}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.377906" elapsed="0.000160"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.378280" level="INFO">${headers} = {'Content-Type': 'application/x-www-form-urlencoded'}</msg>
+<var>${headers}</var>
+<arg>Content-Type=application/x-www-form-urlencoded</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.378118" elapsed="0.000174"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-03-29T11:30:07.450041" level="INFO">POST Request : url=http://localhost:8080/realms/nexora/protocol/openid-connect/token 
+ path_url=/realms/nexora/protocol/openid-connect/token 
+ headers={'User-Agent': 'python-requests/2.33.0', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/x-www-form-urlencoded', 'Content-Length': '84'} 
+ body=grant_type=password&amp;client_id=nexora-api&amp;username=admin@nexora.com&amp;password=admin123 
+ </msg>
+<msg time="2026-03-29T11:30:07.450187" level="INFO">POST Response : url=http://localhost:8080/realms/nexora/protocol/openid-connect/token 
+ status=200, reason=OK 
+ headers={'Cache-Control': 'no-store', 'Pragma': 'no-cache', 'content-length': '1869', 'Content-Type': 'application/json', 'Referrer-Policy': 'no-referrer', 'Strict-Transport-Security': 'max-age=31536000; includeSubDomains', 'X-Content-Type-Options': 'nosniff', 'X-Frame-Options': 'SAMEORIGIN', 'X-XSS-Protection': '1; mode=block'} 
+ body={"access_token":"eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWUnRFY2lDLTJvRnZXZnU1cG9SbU1OVzdrWnpaS0VVNGNTSU83SlZxZlR3In0.eyJleHAiOjE3NzQ3OTgyMDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiYTkwZGVhOTAtZGYzZi00OTI5LWIzMTYtZmJhNzQ0ODE3NjhiIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9uZXhvcmEiLCJhdWQiOiJuZXhvcmEtYXBpIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoibmV4b3JhLWFwaSIsInNpZCI6IjY4MTdmMTAzLTg5NjAtNDg2OC04MWY3LTExYzdkNWFjODI4OSIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiYWRtaW4iXX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoiQWRtaW4gTmV4b3JhIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYWRtaW5AbmV4b3JhLmNvbSIsImdpdmVuX25hbWUiOiJBZG1pbiIsImZhbWlseV9uYW1lIjoiTmV4b3JhIiwiZW1haWwiOiJhZG1pbkBuZXhvcmEuY29tIn0.orrXbU8Dctzy-6OiKX2KGgbqFIGrjr_J33AEzQsrzuXPHvYrDPyGBb-Q6LIzcvf4ae7OjPuCXQTDSoivSEQ_xnJtTDEaRQwPc5ofn-hLtCYahq80kL4R15H9OHTMTQl3_85Wdk5--hzG5I_gqv-bdCAgR2KO-E-MtQuBzcp8yrsmRrBrqtLLGoGWyR4xNGXomi87M_aKpcd4PlWXFlqLnMgXogcL0grLoPYZtYKBZflGl6HxrnEobUME32c65ze5rhA7OB8G7wmoPF_YuLlHheqfrzHYlXeDlOMhOfYX1Ru_2OR3EvIZunFkJY3Vuay4-bef3ZzkOzvesQpr2g-yAw","expires_in":3600,"refresh_expires_in":1800,"refresh_token":"eyJhbGciOiJIUzUxMiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJjYmRlNzhhOC1mMTkwLTRkZjEtOGYxNC05YWUyOGM0NzI1NzIifQ.eyJleHAiOjE3NzQ3OTY0MDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiY2Y0YzhhMjktNzk5OS00ZDQ2LWJmYjctNzkxN2NjNjMyMjMyIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9uZXhvcmEiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvcmVhbG1zL25leG9yYSIsInR5cCI6IlJlZnJlc2giLCJhenAiOiJuZXhvcmEtYXBpIiwic2lkIjoiNjgxN2YxMDMtODk2MC00ODY4LTgxZjctMTFjN2Q1YWM4Mjg5Iiwic2NvcGUiOiJ3ZWItb3JpZ2lucyBhY3IgZW1haWwgcHJvZmlsZSByb2xlcyJ9.GKpKo0r_0nXbZj-DybHMVNIPnMu2L4zIL2r7Fj4rzP1GWV33qnxCSiSW2Le17oqjzC-W6UK-_oFcnE5BdJbq2Q","token_type":"Bearer","not-before-policy":0,"session_state":"6817f103-8960-4868-81f7-11c7d5ac8289","scope":"email profile"} 
+ </msg>
+<msg time="2026-03-29T11:30:07.450336" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>keycloak</arg>
+<arg>/realms/nexora/protocol/openid-connect/token</arg>
+<arg>data=${data}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.378336" elapsed="0.072017"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.451098" level="INFO">${json} = {'access_token': 'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWUnRFY2lDLTJvRnZXZnU1cG9SbU1OVzdrWnpaS0VVNGNTSU83SlZxZlR3In0.eyJleHAiOjE3NzQ3OTgyMDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiYTkwZGVhOTAtZG...</msg>
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.450524" elapsed="0.000591"/>
+</kw>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${json}</arg>
+<arg>access_token</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.451176" elapsed="0.000290"/>
+</kw>
+<return>
+<value>${json}[access_token]</value>
+<status status="PASS" start="2026-03-29T11:30:07.451504" elapsed="0.000034"/>
+</return>
+<msg time="2026-03-29T11:30:07.451635" level="INFO">${token} = eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWUnRFY2lDLTJvRnZXZnU1cG9SbU1OVzdrWnpaS0VVNGNTSU83SlZxZlR3In0.eyJleHAiOjE3NzQ3OTgyMDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiYTkwZGVhOTAtZGYzZi00OTI5LWIzMTYt...</msg>
+<var>${token}</var>
+<arg>${ADMIN_USER}</arg>
+<arg>${ADMIN_PASS}</arg>
+<status status="PASS" start="2026-03-29T11:30:07.377071" elapsed="0.074579"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.451929" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWUnRFY2lDLTJvRnZXZnU1cG9SbU1OVzdrWnpaS0VVNGNTSU83SlZxZlR3In0.eyJleHAiOjE3NzQ3OTgyMDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiYTkwZG...</msg>
+<var>${headers}</var>
+<arg>Authorization=Bearer ${token}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.451727" elapsed="0.000218"/>
+</kw>
+<kw name="Get Time" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.452178" level="INFO">${timestamp} = 1774794607</msg>
+<var>${timestamp}</var>
+<arg>epoch</arg>
+<doc>Returns the given time in the requested format.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.452027" elapsed="0.000166"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.452388" level="INFO">${unique_title} = Curso para Turma 1774794607</msg>
+<var>${unique_title}</var>
+<arg>Curso para Turma ${timestamp}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.452248" elapsed="0.000153"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.452836" level="INFO">${course_body} = {'title': 'Curso para Turma 1774794607', 'description': 'Curso auxiliar para turma', 'category': 'auxiliar'}</msg>
+<var>${course_body}</var>
+<arg>title=${unique_title}</arg>
+<arg>description=Curso auxiliar para turma</arg>
+<arg>category=auxiliar</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.452456" elapsed="0.000411"/>
+</kw>
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2026-03-29T11:30:07.453064" level="INFO">Creating Session using : alias=admin, url=http://localhost:3000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>admin</arg>
+<arg>${BASE_URL}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2026-03-29T11:30:07.452965" elapsed="0.000198"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-03-29T11:30:07.460744" level="INFO">POST Request : url=http://localhost:3000/api/v1/courses 
+ path_url=/api/v1/courses 
+ headers={'User-Agent': 'python-requests/2.33.0', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWUnRFY2lDLTJvRnZXZnU1cG9SbU1OVzdrWnpaS0VVNGNTSU83SlZxZlR3In0.eyJleHAiOjE3NzQ3OTgyMDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiYTkwZGVhOTAtZGYzZi00OTI5LWIzMTYtZmJhNzQ0ODE3NjhiIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9uZXhvcmEiLCJhdWQiOiJuZXhvcmEtYXBpIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoibmV4b3JhLWFwaSIsInNpZCI6IjY4MTdmMTAzLTg5NjAtNDg2OC04MWY3LTExYzdkNWFjODI4OSIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiYWRtaW4iXX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoiQWRtaW4gTmV4b3JhIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYWRtaW5AbmV4b3JhLmNvbSIsImdpdmVuX25hbWUiOiJBZG1pbiIsImZhbWlseV9uYW1lIjoiTmV4b3JhIiwiZW1haWwiOiJhZG1pbkBuZXhvcmEuY29tIn0.orrXbU8Dctzy-6OiKX2KGgbqFIGrjr_J33AEzQsrzuXPHvYrDPyGBb-Q6LIzcvf4ae7OjPuCXQTDSoivSEQ_xnJtTDEaRQwPc5ofn-hLtCYahq80kL4R15H9OHTMTQl3_85Wdk5--hzG5I_gqv-bdCAgR2KO-E-MtQuBzcp8yrsmRrBrqtLLGoGWyR4xNGXomi87M_aKpcd4PlWXFlqLnMgXogcL0grLoPYZtYKBZflGl6HxrnEobUME32c65ze5rhA7OB8G7wmoPF_YuLlHheqfrzHYlXeDlOMhOfYX1Ru_2OR3EvIZunFkJY3Vuay4-bef3ZzkOzvesQpr2g-yAw', 'Content-Length': '108', 'Content-Type': 'application/json'} 
+ body=b'{"title": "Curso para Turma 1774794607", "description": "Curso auxiliar para turma", "category": "auxiliar"}' 
+ </msg>
+<msg time="2026-03-29T11:30:07.460823" level="INFO">POST Response : url=http://localhost:3000/api/v1/courses 
+ status=201, reason=Created 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'x-correlation-id': '234568d5-4f16-4f0e-9047-bf21f5dcca32', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '389', 'ETag': 'W/"185-aO/ci3EjsTncfADCuZ26LLvg6E8"', 'Date': 'Sun, 29 Mar 2026 14:30:07 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"data":{"id":"69c9376f65a5229cddca1c4f","title":"Curso para Turma 1774794607","slug":"curso-para-turma-1774794607","description":"Curso auxiliar para turma","category":"auxiliar","tags":[],"status":"draft","createdAt":"2026-03-29T14:30:07.458Z","updatedAt":"2026-03-29T14:30:07.458Z"},"meta":{"correlationId":"234568d5-4f16-4f0e-9047-bf21f5dcca32","timestamp":"2026-03-29T14:30:07.459Z"}} 
+ </msg>
+<msg time="2026-03-29T11:30:07.460944" level="INFO">${course_response} = &lt;Response [201]&gt;</msg>
+<var>${course_response}</var>
+<arg>admin</arg>
+<arg>${API_PREFIX}/courses</arg>
+<arg>headers=${headers}</arg>
+<arg>json=${course_body}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.453232" elapsed="0.007732"/>
+</kw>
+<kw name="Status Should Be" owner="RequestsLibrary">
+<arg>201</arg>
+<arg>${course_response}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.461077" elapsed="0.000185"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.461922" level="INFO">${course_id} = 69c9376f65a5229cddca1c4f</msg>
+<var>${course_id}</var>
+<arg>${course_response.json()['data']['id']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.461325" elapsed="0.000616"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.462498" level="INFO">${classroom_body} = {'courseId': '69c9376f65a5229cddca1c4f', 'name': 'Turma Teste 1774794607', 'capacity': 30, 'enrollmentStart': '2026-04-01T00:00:00Z', 'enrollmentEnd': '2026-04-20T23:59:59Z', 'startAt': '2026-05-01T19...</msg>
+<var>${classroom_body}</var>
+<arg>courseId=${course_id}</arg>
+<arg>name=Turma Teste ${timestamp}</arg>
+<arg>capacity=${30}</arg>
+<arg>enrollmentStart=2026-04-01T00:00:00Z</arg>
+<arg>enrollmentEnd=2026-04-20T23:59:59Z</arg>
+<arg>startAt=2026-05-01T19:00:00Z</arg>
+<arg>endAt=2026-06-30T22:00:00Z</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.462020" elapsed="0.000495"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-03-29T11:30:07.468840" level="INFO">POST Request : url=http://localhost:3000/api/v1/classrooms 
+ path_url=/api/v1/classrooms 
+ headers={'User-Agent': 'python-requests/2.33.0', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWUnRFY2lDLTJvRnZXZnU1cG9SbU1OVzdrWnpaS0VVNGNTSU83SlZxZlR3In0.eyJleHAiOjE3NzQ3OTgyMDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiYTkwZGVhOTAtZGYzZi00OTI5LWIzMTYtZmJhNzQ0ODE3NjhiIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9uZXhvcmEiLCJhdWQiOiJuZXhvcmEtYXBpIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoibmV4b3JhLWFwaSIsInNpZCI6IjY4MTdmMTAzLTg5NjAtNDg2OC04MWY3LTExYzdkNWFjODI4OSIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiYWRtaW4iXX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoiQWRtaW4gTmV4b3JhIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYWRtaW5AbmV4b3JhLmNvbSIsImdpdmVuX25hbWUiOiJBZG1pbiIsImZhbWlseV9uYW1lIjoiTmV4b3JhIiwiZW1haWwiOiJhZG1pbkBuZXhvcmEuY29tIn0.orrXbU8Dctzy-6OiKX2KGgbqFIGrjr_J33AEzQsrzuXPHvYrDPyGBb-Q6LIzcvf4ae7OjPuCXQTDSoivSEQ_xnJtTDEaRQwPc5ofn-hLtCYahq80kL4R15H9OHTMTQl3_85Wdk5--hzG5I_gqv-bdCAgR2KO-E-MtQuBzcp8yrsmRrBrqtLLGoGWyR4xNGXomi87M_aKpcd4PlWXFlqLnMgXogcL0grLoPYZtYKBZflGl6HxrnEobUME32c65ze5rhA7OB8G7wmoPF_YuLlHheqfrzHYlXeDlOMhOfYX1Ru_2OR3EvIZunFkJY3Vuay4-bef3ZzkOzvesQpr2g-yAw', 'Content-Length': '242', 'Content-Type': 'application/json'} 
+ body=b'{"courseId": "69c9376f65a5229cddca1c4f", "name": "Turma Teste 1774794607", "capacity": 30, "enrollmentStart": "2026-04-01T00:00:00Z", "enrollmentEnd": "2026-04-20T23:59:59Z", "startAt": "2026-05-01T19:00:00Z", "endAt": "2026-06-30T22:00:00Z"}' 
+ </msg>
+<msg time="2026-03-29T11:30:07.468889" level="INFO">POST Response : url=http://localhost:3000/api/v1/classrooms 
+ status=201, reason=Created 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'x-correlation-id': '6f4aa605-725c-4d34-a1e7-5085a10c1e77', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '564', 'ETag': 'W/"234-L2NVbkzLoivyT/CjYxtXFIR8YpI"', 'Date': 'Sun, 29 Mar 2026 14:30:07 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"data":{"id":"69c9376f65a5229cddca1c52","courseId":"69c9376f65a5229cddca1c4f","courseTitle":"Curso para Turma 1774794607","name":"Turma Teste 1774794607","teacherId":null,"teacherName":null,"capacity":30,"enrollmentStart":"2026-04-01T00:00:00.000Z","enrollmentEnd":"2026-04-20T23:59:59.000Z","startAt":"2026-05-01T19:00:00.000Z","endAt":"2026-06-30T22:00:00.000Z","status":"draft","createdAt":"2026-03-29T14:30:07.466Z","updatedAt":"2026-03-29T14:30:07.466Z"},"meta":{"correlationId":"6f4aa605-725c-4d34-a1e7-5085a10c1e77","timestamp":"2026-03-29T14:30:07.468Z"}} 
+ </msg>
+<msg time="2026-03-29T11:30:07.468950" level="INFO">${classroom_response} = &lt;Response [201]&gt;</msg>
+<var>${classroom_response}</var>
+<arg>admin</arg>
+<arg>${API_PREFIX}/classrooms</arg>
+<arg>headers=${headers}</arg>
+<arg>json=${classroom_body}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.462592" elapsed="0.006371"/>
+</kw>
+<kw name="Status Should Be" owner="RequestsLibrary">
+<arg>201</arg>
+<arg>${classroom_response}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.469035" elapsed="0.000102"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.469554" level="INFO">${json} = {'data': {'id': '69c9376f65a5229cddca1c52', 'courseId': '69c9376f65a5229cddca1c4f', 'courseTitle': 'Curso para Turma 1774794607', 'name': 'Turma Teste 1774794607', 'teacherId': None, 'teacherName': No...</msg>
+<var>${json}</var>
+<arg>${classroom_response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.469189" elapsed="0.000380"/>
+</kw>
+<kw name="Dictionary Should Contain Key" owner="Collections">
+<arg>${json['data']}</arg>
+<arg>id</arg>
+<doc>Fails if ``key`` is not found from ``dictionary``.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.469619" elapsed="0.000304"/>
+</kw>
+<tag>admin</tag>
+<tag>classrooms</tag>
+<status status="PASS" start="2026-03-29T11:30:07.376812" elapsed="0.093184"/>
+</test>
+<doc>Testes E2E para API Nexora Academy - Turmas</doc>
+<status status="PASS" start="2026-03-29T11:30:07.282007" elapsed="0.188303"/>
+</suite>
+<suite id="s1-s2" name="Courses" source="/Users/cliente/Documents/xpe/nexora-academy-api/tests/robot/courses.robot">
+<test id="s1-s2-t1" name="Should List Courses Public" line="13">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2026-03-29T11:30:07.471987" level="INFO">Creating Session using : alias=public, url=http://localhost:3000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>public</arg>
+<arg>${BASE_URL}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2026-03-29T11:30:07.471919" elapsed="0.000152"/>
+</kw>
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-03-29T11:30:07.477374" level="INFO">GET Request : url=http://localhost:3000/api/v1/courses 
+ path_url=/api/v1/courses 
+ headers={'User-Agent': 'python-requests/2.33.0', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2026-03-29T11:30:07.477429" level="INFO">GET Response : url=http://localhost:3000/api/v1/courses 
+ status=200, reason=OK 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'x-correlation-id': 'a49b57a3-a229-4acb-ab87-445d1f809ddc', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '114', 'ETag': 'W/"72-yLf+nvFmM/cVILDX1XzoUo5tFXQ"', 'Date': 'Sun, 29 Mar 2026 14:30:07 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"data":[],"meta":{"correlationId":"a49b57a3-a229-4acb-ab87-445d1f809ddc","timestamp":"2026-03-29T14:30:07.476Z"}} 
+ </msg>
+<msg time="2026-03-29T11:30:07.477536" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>public</arg>
+<arg>${API_PREFIX}/courses</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.472127" elapsed="0.005445"/>
+</kw>
+<kw name="Status Should Be" owner="RequestsLibrary">
+<arg>200</arg>
+<arg>${response}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.477656" elapsed="0.000116"/>
+</kw>
+<tag>courses</tag>
+<tag>public</tag>
+<status status="PASS" start="2026-03-29T11:30:07.471732" elapsed="0.006095"/>
+</test>
+<test id="s1-s2-t2" name="Admin Should Create Course" line="19">
+<kw name="Get Token" owner="keywords">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.478481" level="INFO">${keycloak_url} = http://localhost:8080/realms/nexora/protocol/openid-connect/token</msg>
+<var>${keycloak_url}</var>
+<arg>http://localhost:8080/realms/nexora/protocol/openid-connect/token</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.478336" elapsed="0.000159"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.478654" level="INFO">${client_id} = nexora-api</msg>
+<var>${client_id}</var>
+<arg>nexora-api</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.478544" elapsed="0.000123"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.478813" level="INFO">${client_secret} = </msg>
+<var>${client_secret}</var>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.478712" elapsed="0.000114"/>
+</kw>
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2026-03-29T11:30:07.478942" level="INFO">Creating Session using : alias=keycloak, url=http://localhost:8080, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>keycloak</arg>
+<arg>http://localhost:8080</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2026-03-29T11:30:07.478882" elapsed="0.000132"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.479225" level="INFO">${data} = grant_type=password&amp;client_id=nexora-api&amp;username=admin@nexora.com&amp;password=admin123</msg>
+<var>${data}</var>
+<arg>grant_type=password&amp;client_id=${client_id}&amp;username=${username}&amp;password=${password}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.479061" elapsed="0.000178"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.479431" level="INFO">${headers} = {'Content-Type': 'application/x-www-form-urlencoded'}</msg>
+<var>${headers}</var>
+<arg>Content-Type=application/x-www-form-urlencoded</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.479293" elapsed="0.000150"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-03-29T11:30:07.521602" level="INFO">POST Request : url=http://localhost:8080/realms/nexora/protocol/openid-connect/token 
+ path_url=/realms/nexora/protocol/openid-connect/token 
+ headers={'User-Agent': 'python-requests/2.33.0', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/x-www-form-urlencoded', 'Content-Length': '84'} 
+ body=grant_type=password&amp;client_id=nexora-api&amp;username=admin@nexora.com&amp;password=admin123 
+ </msg>
+<msg time="2026-03-29T11:30:07.521670" level="INFO">POST Response : url=http://localhost:8080/realms/nexora/protocol/openid-connect/token 
+ status=200, reason=OK 
+ headers={'Cache-Control': 'no-store', 'Pragma': 'no-cache', 'content-length': '1869', 'Content-Type': 'application/json', 'Referrer-Policy': 'no-referrer', 'Strict-Transport-Security': 'max-age=31536000; includeSubDomains', 'X-Content-Type-Options': 'nosniff', 'X-Frame-Options': 'SAMEORIGIN', 'X-XSS-Protection': '1; mode=block'} 
+ body={"access_token":"eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWUnRFY2lDLTJvRnZXZnU1cG9SbU1OVzdrWnpaS0VVNGNTSU83SlZxZlR3In0.eyJleHAiOjE3NzQ3OTgyMDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiZDI0MzhlMjEtOTBmYy00ZDZmLTk3ZmYtMDYxMjg3YTcyMTFmIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9uZXhvcmEiLCJhdWQiOiJuZXhvcmEtYXBpIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoibmV4b3JhLWFwaSIsInNpZCI6IjE3ZjU1ZDBhLWZjN2ItNGNlOC1hYTczLTI0ZDcxMDEyMzIyYSIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiYWRtaW4iXX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoiQWRtaW4gTmV4b3JhIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYWRtaW5AbmV4b3JhLmNvbSIsImdpdmVuX25hbWUiOiJBZG1pbiIsImZhbWlseV9uYW1lIjoiTmV4b3JhIiwiZW1haWwiOiJhZG1pbkBuZXhvcmEuY29tIn0.Gk_19866no_3Ur558ZmJ0RsPFygoRjrNSTRGfzCNx9lO3yVOlxjZ_R2lQsg1m1TjTvOW63zXx7RiTqoWJTkQcT4z7jRPZJiVGE1wAaAonxbW5p5IezMEnFUEwRSFa1PxT7UhFo9jBNHed3NsWplB2hpYfooTixl-HfeoyOFTShOs5EEdO4Is4yQ7w6rO30KaB2_9dzbI4d0eoSB3B708XD6zARimTe8Tka3oFirvufYg52ZXC5gVf7MQSTq0kksSNuBhOOPHCA1c4ulf_2dteDJjQtMLMFRi-1YoZDKj9uowTygRtwS4eXyok03CGlUgVCyHJbyOB0s_daiokEiVPQ","expires_in":3600,"refresh_expires_in":1800,"refresh_token":"eyJhbGciOiJIUzUxMiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJjYmRlNzhhOC1mMTkwLTRkZjEtOGYxNC05YWUyOGM0NzI1NzIifQ.eyJleHAiOjE3NzQ3OTY0MDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiYTVmOGI3YzEtMjliOC00OWMwLWIxOGEtNWM1MGIyNzRkNThmIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9uZXhvcmEiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvcmVhbG1zL25leG9yYSIsInR5cCI6IlJlZnJlc2giLCJhenAiOiJuZXhvcmEtYXBpIiwic2lkIjoiMTdmNTVkMGEtZmM3Yi00Y2U4LWFhNzMtMjRkNzEwMTIzMjJhIiwic2NvcGUiOiJ3ZWItb3JpZ2lucyBhY3IgZW1haWwgcHJvZmlsZSByb2xlcyJ9.BQIrkg_UbcvsfYJC95O0GM1OtGtlGamUcgkKVE3BpwgaUsf0SiaTrIAvS4EZmfht-F1RX2_zksdireBiVDMmlA","token_type":"Bearer","not-before-policy":0,"session_state":"17f55d0a-fc7b-4ce8-aa73-24d71012322a","scope":"email profile"} 
+ </msg>
+<msg time="2026-03-29T11:30:07.521759" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>keycloak</arg>
+<arg>/realms/nexora/protocol/openid-connect/token</arg>
+<arg>data=${data}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.479490" elapsed="0.042285"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.522334" level="INFO">${json} = {'access_token': 'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWUnRFY2lDLTJvRnZXZnU1cG9SbU1OVzdrWnpaS0VVNGNTSU83SlZxZlR3In0.eyJleHAiOjE3NzQ3OTgyMDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiZDI0MzhlMjEtOT...</msg>
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.521871" elapsed="0.000478"/>
+</kw>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${json}</arg>
+<arg>access_token</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.522409" elapsed="0.000160"/>
+</kw>
+<return>
+<value>${json}[access_token]</value>
+<status status="PASS" start="2026-03-29T11:30:07.522598" elapsed="0.000033"/>
+</return>
+<msg time="2026-03-29T11:30:07.522711" level="INFO">${token} = eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWUnRFY2lDLTJvRnZXZnU1cG9SbU1OVzdrWnpaS0VVNGNTSU83SlZxZlR3In0.eyJleHAiOjE3NzQ3OTgyMDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiZDI0MzhlMjEtOTBmYy00ZDZmLTk3ZmYt...</msg>
+<var>${token}</var>
+<arg>${ADMIN_USER}</arg>
+<arg>${ADMIN_PASS}</arg>
+<status status="PASS" start="2026-03-29T11:30:07.478171" elapsed="0.044552"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.522949" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWUnRFY2lDLTJvRnZXZnU1cG9SbU1OVzdrWnpaS0VVNGNTSU83SlZxZlR3In0.eyJleHAiOjE3NzQ3OTgyMDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiZDI0Mz...</msg>
+<var>${headers}</var>
+<arg>Authorization=Bearer ${token}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.522784" elapsed="0.000179"/>
+</kw>
+<kw name="Get Time" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.523141" level="INFO">${timestamp} = 1774794607</msg>
+<var>${timestamp}</var>
+<arg>epoch</arg>
+<doc>Returns the given time in the requested format.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.523013" elapsed="0.000138"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.523306" level="INFO">${unique_title} = Curso Teste 1774794607</msg>
+<var>${unique_title}</var>
+<arg>Curso Teste ${timestamp}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.523193" elapsed="0.000124"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.523508" level="INFO">${body} = {'title': 'Curso Teste 1774794607', 'description': 'Curso de Teste sobre APIs', 'category': 'tecnologia'}</msg>
+<var>${body}</var>
+<arg>title=${unique_title}</arg>
+<arg>description=Curso de Teste sobre APIs</arg>
+<arg>category=tecnologia</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.523362" elapsed="0.000157"/>
+</kw>
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2026-03-29T11:30:07.523618" level="INFO">Creating Session using : alias=admin, url=http://localhost:3000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>admin</arg>
+<arg>${BASE_URL}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2026-03-29T11:30:07.523563" elapsed="0.000123"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-03-29T11:30:07.529670" level="INFO">POST Request : url=http://localhost:3000/api/v1/courses 
+ path_url=/api/v1/courses 
+ headers={'User-Agent': 'python-requests/2.33.0', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWUnRFY2lDLTJvRnZXZnU1cG9SbU1OVzdrWnpaS0VVNGNTSU83SlZxZlR3In0.eyJleHAiOjE3NzQ3OTgyMDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiZDI0MzhlMjEtOTBmYy00ZDZmLTk3ZmYtMDYxMjg3YTcyMTFmIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9uZXhvcmEiLCJhdWQiOiJuZXhvcmEtYXBpIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoibmV4b3JhLWFwaSIsInNpZCI6IjE3ZjU1ZDBhLWZjN2ItNGNlOC1hYTczLTI0ZDcxMDEyMzIyYSIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiYWRtaW4iXX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoiQWRtaW4gTmV4b3JhIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYWRtaW5AbmV4b3JhLmNvbSIsImdpdmVuX25hbWUiOiJBZG1pbiIsImZhbWlseV9uYW1lIjoiTmV4b3JhIiwiZW1haWwiOiJhZG1pbkBuZXhvcmEuY29tIn0.Gk_19866no_3Ur558ZmJ0RsPFygoRjrNSTRGfzCNx9lO3yVOlxjZ_R2lQsg1m1TjTvOW63zXx7RiTqoWJTkQcT4z7jRPZJiVGE1wAaAonxbW5p5IezMEnFUEwRSFa1PxT7UhFo9jBNHed3NsWplB2hpYfooTixl-HfeoyOFTShOs5EEdO4Is4yQ7w6rO30KaB2_9dzbI4d0eoSB3B708XD6zARimTe8Tka3oFirvufYg52ZXC5gVf7MQSTq0kksSNuBhOOPHCA1c4ulf_2dteDJjQtMLMFRi-1YoZDKj9uowTygRtwS4eXyok03CGlUgVCyHJbyOB0s_daiokEiVPQ', 'Content-Length': '105', 'Content-Type': 'application/json'} 
+ body=b'{"title": "Curso Teste 1774794607", "description": "Curso de Teste sobre APIs", "category": "tecnologia"}' 
+ </msg>
+<msg time="2026-03-29T11:30:07.529721" level="INFO">POST Response : url=http://localhost:3000/api/v1/courses 
+ status=201, reason=Created 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'x-correlation-id': '815e2808-f1a4-4c81-b4e5-945b38d7adbb', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '381', 'ETag': 'W/"17d-1KYy/KCr+bhwt60maQ+KwSEKEmQ"', 'Date': 'Sun, 29 Mar 2026 14:30:07 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"data":{"id":"69c9376f65a5229cddca1c56","title":"Curso Teste 1774794607","slug":"curso-teste-1774794607","description":"Curso de Teste sobre APIs","category":"tecnologia","tags":[],"status":"draft","createdAt":"2026-03-29T14:30:07.528Z","updatedAt":"2026-03-29T14:30:07.528Z"},"meta":{"correlationId":"815e2808-f1a4-4c81-b4e5-945b38d7adbb","timestamp":"2026-03-29T14:30:07.529Z"}} 
+ </msg>
+<msg time="2026-03-29T11:30:07.529785" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>admin</arg>
+<arg>${API_PREFIX}/courses</arg>
+<arg>headers=${headers}</arg>
+<arg>json=${body}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.523738" elapsed="0.006059"/>
+</kw>
+<kw name="Status Should Be" owner="RequestsLibrary">
+<arg>201</arg>
+<arg>${response}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.529872" elapsed="0.000095"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.530360" level="INFO">${json} = {'data': {'id': '69c9376f65a5229cddca1c56', 'title': 'Curso Teste 1774794607', 'slug': 'curso-teste-1774794607', 'description': 'Curso de Teste sobre APIs', 'category': 'tecnologia', 'tags': [], 'stat...</msg>
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.530014" elapsed="0.000359"/>
+</kw>
+<kw name="Dictionary Should Contain Key" owner="Collections">
+<arg>${json['data']}</arg>
+<arg>id</arg>
+<doc>Fails if ``key`` is not found from ``dictionary``.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.530417" elapsed="0.000243"/>
+</kw>
+<tag>admin</tag>
+<tag>courses</tag>
+<status status="PASS" start="2026-03-29T11:30:07.477934" elapsed="0.052785"/>
+</test>
+<doc>Testes E2E para API Nexora Academy - Cursos</doc>
+<status status="PASS" start="2026-03-29T11:30:07.470572" elapsed="0.060319"/>
+</suite>
+<suite id="s1-s3" name="Create User" source="/Users/cliente/Documents/xpe/nexora-academy-api/tests/robot/create_user.robot">
+<test id="s1-s3-t1" name="Admin Should Create User" line="9">
+<kw name="Get Token" owner="keywords">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.532543" level="INFO">${keycloak_url} = http://localhost:8080/realms/nexora/protocol/openid-connect/token</msg>
+<var>${keycloak_url}</var>
+<arg>http://localhost:8080/realms/nexora/protocol/openid-connect/token</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.532432" elapsed="0.000124"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.532702" level="INFO">${client_id} = nexora-api</msg>
+<var>${client_id}</var>
+<arg>nexora-api</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.532600" elapsed="0.000113"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.532851" level="INFO">${client_secret} = </msg>
+<var>${client_secret}</var>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.532755" elapsed="0.000107"/>
+</kw>
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2026-03-29T11:30:07.532941" level="INFO">Creating Session using : alias=keycloak, url=http://localhost:8080, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>keycloak</arg>
+<arg>http://localhost:8080</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2026-03-29T11:30:07.532902" elapsed="0.000102"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.533190" level="INFO">${data} = grant_type=password&amp;client_id=nexora-api&amp;username=admin@nexora.com&amp;password=admin123</msg>
+<var>${data}</var>
+<arg>grant_type=password&amp;client_id=${client_id}&amp;username=${username}&amp;password=${password}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.533048" elapsed="0.000154"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.533371" level="INFO">${headers} = {'Content-Type': 'application/x-www-form-urlencoded'}</msg>
+<var>${headers}</var>
+<arg>Content-Type=application/x-www-form-urlencoded</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.533250" elapsed="0.000132"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-03-29T11:30:07.581409" level="INFO">POST Request : url=http://localhost:8080/realms/nexora/protocol/openid-connect/token 
+ path_url=/realms/nexora/protocol/openid-connect/token 
+ headers={'User-Agent': 'python-requests/2.33.0', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/x-www-form-urlencoded', 'Content-Length': '84'} 
+ body=grant_type=password&amp;client_id=nexora-api&amp;username=admin@nexora.com&amp;password=admin123 
+ </msg>
+<msg time="2026-03-29T11:30:07.581464" level="INFO">POST Response : url=http://localhost:8080/realms/nexora/protocol/openid-connect/token 
+ status=200, reason=OK 
+ headers={'Cache-Control': 'no-store', 'Pragma': 'no-cache', 'content-length': '1869', 'Content-Type': 'application/json', 'Referrer-Policy': 'no-referrer', 'Strict-Transport-Security': 'max-age=31536000; includeSubDomains', 'X-Content-Type-Options': 'nosniff', 'X-Frame-Options': 'SAMEORIGIN', 'X-XSS-Protection': '1; mode=block'} 
+ body={"access_token":"eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWUnRFY2lDLTJvRnZXZnU1cG9SbU1OVzdrWnpaS0VVNGNTSU83SlZxZlR3In0.eyJleHAiOjE3NzQ3OTgyMDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiMjhlZGUwYjItOWUzZi00ODM1LThiNDItODY2NTZkMDYwZTJhIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9uZXhvcmEiLCJhdWQiOiJuZXhvcmEtYXBpIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoibmV4b3JhLWFwaSIsInNpZCI6ImU2NDRkNjBjLTJhNzUtNDBhYi1hOTdjLWUyMjhhYjZmMTA4YyIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiYWRtaW4iXX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoiQWRtaW4gTmV4b3JhIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYWRtaW5AbmV4b3JhLmNvbSIsImdpdmVuX25hbWUiOiJBZG1pbiIsImZhbWlseV9uYW1lIjoiTmV4b3JhIiwiZW1haWwiOiJhZG1pbkBuZXhvcmEuY29tIn0.amypOvdUxPkkELrHS-FF8NBjNlPOQkdLwQzoFag-WJgbsnmA64LdJEVIUkRb3uf6EwY8N4ypZZfTu4QU0mtNyjpnSRbFf-W_t_SHZ9C3lXlJrx-rzUTxJbMX_Xd3SVI9bI_nFvCjuGAujZk-FmpJVjeKKjhooxBNOpbbK7sLKIHnuPOodqGyLM5OrVH5Mr1c0EzjIBjA9596NeFOK3IaZbj9ISACCtHU5Sa8rzOvENc9g3vMIKIVFVthCmp9ZsjGhRijD76O6as_HdtRsj9YtKiGzrWYD8CkXfAjv9HypMTEmXA6SuaPWEqI9_1ipzneLRH6SsvwPVlJaLkKG4iO9Q","expires_in":3600,"refresh_expires_in":1800,"refresh_token":"eyJhbGciOiJIUzUxMiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJjYmRlNzhhOC1mMTkwLTRkZjEtOGYxNC05YWUyOGM0NzI1NzIifQ.eyJleHAiOjE3NzQ3OTY0MDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiZTA5MDU3YmMtYTJjNy00ZGIxLWJhMGYtYzc4ZjUyZjMxMjUxIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9uZXhvcmEiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvcmVhbG1zL25leG9yYSIsInR5cCI6IlJlZnJlc2giLCJhenAiOiJuZXhvcmEtYXBpIiwic2lkIjoiZTY0NGQ2MGMtMmE3NS00MGFiLWE5N2MtZTIyOGFiNmYxMDhjIiwic2NvcGUiOiJ3ZWItb3JpZ2lucyBhY3IgZW1haWwgcHJvZmlsZSByb2xlcyJ9.Z2_OfBGxOsA3sjG07jXb9rU3c6gL9LsD_jvXYuXqxFfHHqBHKBwCKwr8yXZ-CjsAK9VLjdtOBcJkYsZ0uUq0wg","token_type":"Bearer","not-before-policy":0,"session_state":"e644d60c-2a75-40ab-a97c-e228ab6f108c","scope":"email profile"} 
+ </msg>
+<msg time="2026-03-29T11:30:07.581552" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>keycloak</arg>
+<arg>/realms/nexora/protocol/openid-connect/token</arg>
+<arg>data=${data}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.533422" elapsed="0.048142"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.582084" level="INFO">${json} = {'access_token': 'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWUnRFY2lDLTJvRnZXZnU1cG9SbU1OVzdrWnpaS0VVNGNTSU83SlZxZlR3In0.eyJleHAiOjE3NzQ3OTgyMDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiMjhlZGUwYjItOW...</msg>
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.581649" elapsed="0.000448"/>
+</kw>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${json}</arg>
+<arg>access_token</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.582145" elapsed="0.000135"/>
+</kw>
+<return>
+<value>${json}[access_token]</value>
+<status status="PASS" start="2026-03-29T11:30:07.582305" elapsed="0.000019"/>
+</return>
+<msg time="2026-03-29T11:30:07.582391" level="INFO">${token} = eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWUnRFY2lDLTJvRnZXZnU1cG9SbU1OVzdrWnpaS0VVNGNTSU83SlZxZlR3In0.eyJleHAiOjE3NzQ3OTgyMDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiMjhlZGUwYjItOWUzZi00ODM1LThiNDIt...</msg>
+<var>${token}</var>
+<arg>${ADMIN_USER}</arg>
+<arg>${ADMIN_PASS}</arg>
+<status status="PASS" start="2026-03-29T11:30:07.532295" elapsed="0.050107"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.582598" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWUnRFY2lDLTJvRnZXZnU1cG9SbU1OVzdrWnpaS0VVNGNTSU83SlZxZlR3In0.eyJleHAiOjE3NzQ3OTgyMDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiMjhlZG...</msg>
+<var>${headers}</var>
+<arg>Authorization=Bearer ${token}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.582452" elapsed="0.000158"/>
+</kw>
+<kw name="Get Time" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.582764" level="INFO">${timestamp} = 1774794607</msg>
+<var>${timestamp}</var>
+<arg>epoch</arg>
+<doc>Returns the given time in the requested format.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.582654" elapsed="0.000120"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.582918" level="INFO">${email} = testuser1774794607@nexora.com</msg>
+<var>${email}</var>
+<arg>testuser${timestamp}@nexora.com</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.582813" elapsed="0.000115"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.583068" level="INFO">${identity_id} = test-identity-1774794607</msg>
+<var>${identity_id}</var>
+<arg>test-identity-${timestamp}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.582966" elapsed="0.000112"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.583309" level="INFO">${body} = {'identityId': 'test-identity-1774794607', 'name': 'Usuário Teste 1774794607', 'email': 'testuser1774794607@nexora.com', 'role': 'student', 'status': 'active', 'description': 'Aluno de APIs', 'subject...</msg>
+<var>${body}</var>
+<arg>identityId=${identity_id}</arg>
+<arg>name=Usuário Teste ${timestamp}</arg>
+<arg>email=${email}</arg>
+<arg>role=student</arg>
+<arg>status=active</arg>
+<arg>description=Aluno de APIs</arg>
+<arg>subject=Matemática</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.583118" elapsed="0.000203"/>
+</kw>
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2026-03-29T11:30:07.583421" level="INFO">Creating Session using : alias=admin, url=http://localhost:3000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>admin</arg>
+<arg>${BASE_URL}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2026-03-29T11:30:07.583368" elapsed="0.000118"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-03-29T11:30:07.591999" level="INFO">POST Request : url=http://localhost:3000/api/v1/users 
+ path_url=/api/v1/users 
+ headers={'User-Agent': 'python-requests/2.33.0', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWUnRFY2lDLTJvRnZXZnU1cG9SbU1OVzdrWnpaS0VVNGNTSU83SlZxZlR3In0.eyJleHAiOjE3NzQ3OTgyMDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiMjhlZGUwYjItOWUzZi00ODM1LThiNDItODY2NTZkMDYwZTJhIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9uZXhvcmEiLCJhdWQiOiJuZXhvcmEtYXBpIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoibmV4b3JhLWFwaSIsInNpZCI6ImU2NDRkNjBjLTJhNzUtNDBhYi1hOTdjLWUyMjhhYjZmMTA4YyIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiYWRtaW4iXX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoiQWRtaW4gTmV4b3JhIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYWRtaW5AbmV4b3JhLmNvbSIsImdpdmVuX25hbWUiOiJBZG1pbiIsImZhbWlseV9uYW1lIjoiTmV4b3JhIiwiZW1haWwiOiJhZG1pbkBuZXhvcmEuY29tIn0.amypOvdUxPkkELrHS-FF8NBjNlPOQkdLwQzoFag-WJgbsnmA64LdJEVIUkRb3uf6EwY8N4ypZZfTu4QU0mtNyjpnSRbFf-W_t_SHZ9C3lXlJrx-rzUTxJbMX_Xd3SVI9bI_nFvCjuGAujZk-FmpJVjeKKjhooxBNOpbbK7sLKIHnuPOodqGyLM5OrVH5Mr1c0EzjIBjA9596NeFOK3IaZbj9ISACCtHU5Sa8rzOvENc9g3vMIKIVFVthCmp9ZsjGhRijD76O6as_HdtRsj9YtKiGzrWYD8CkXfAjv9HypMTEmXA6SuaPWEqI9_1ipzneLRH6SsvwPVlJaLkKG4iO9Q', 'Content-Length': '226', 'Content-Type': 'application/json'} 
+ body=b'{"identityId": "test-identity-1774794607", "name": "Usu\\u00e1rio Teste 1774794607", "email": "testuser1774794607@nexora.com", "role": "student", "status": "active", "description": "Aluno de APIs", "subject": "Matem\\u00e1tica"}' 
+ </msg>
+<msg time="2026-03-29T11:30:07.592055" level="INFO">POST Response : url=http://localhost:3000/api/v1/users 
+ status=201, reason=Created 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'x-correlation-id': '773f91ae-1942-4eaf-b53f-5ba780fde915', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '373', 'ETag': 'W/"175-sJ03PxxOQJZiltrlJCTjozK5C7k"', 'Date': 'Sun, 29 Mar 2026 14:30:07 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"data":{"id":"69c9376f65a5229cddca1c5a","identityId":"test-identity-1774794607","name":"Usuário Teste 1774794607","email":"testuser1774794607@nexora.com","role":"student","status":"active","createdAt":"2026-03-29T14:30:07.589Z","updatedAt":"2026-03-29T14:30:07.589Z"},"meta":{"correlationId":"773f91ae-1942-4eaf-b53f-5ba780fde915","timestamp":"2026-03-29T14:30:07.591Z"}} 
+ </msg>
+<msg time="2026-03-29T11:30:07.592130" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>admin</arg>
+<arg>${API_PREFIX}/users</arg>
+<arg>headers=${headers}</arg>
+<arg>json=${body}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.583525" elapsed="0.008618"/>
+</kw>
+<kw name="Status Should Be" owner="RequestsLibrary">
+<arg>201</arg>
+<arg>${response}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.592225" elapsed="0.000102"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.592734" level="INFO">${json} = {'data': {'id': '69c9376f65a5229cddca1c5a', 'identityId': 'test-identity-1774794607', 'name': 'Usuário Teste 1774794607', 'email': 'testuser1774794607@nexora.com', 'role': 'student', 'status': 'active...</msg>
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.592375" elapsed="0.000372"/>
+</kw>
+<kw name="Dictionary Should Contain Key" owner="Collections">
+<arg>${json['data']}</arg>
+<arg>id</arg>
+<doc>Fails if ``key`` is not found from ``dictionary``.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.592805" elapsed="0.000246"/>
+</kw>
+<tag>admin</tag>
+<tag>create</tag>
+<tag>users</tag>
+<status status="PASS" start="2026-03-29T11:30:07.532096" elapsed="0.061005"/>
+</test>
+<test id="s1-s3-t2" name="Admin Should Create Teacher" line="23">
+<kw name="Get Token" owner="keywords">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.593664" level="INFO">${keycloak_url} = http://localhost:8080/realms/nexora/protocol/openid-connect/token</msg>
+<var>${keycloak_url}</var>
+<arg>http://localhost:8080/realms/nexora/protocol/openid-connect/token</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.593561" elapsed="0.000114"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.593813" level="INFO">${client_id} = nexora-api</msg>
+<var>${client_id}</var>
+<arg>nexora-api</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.593716" elapsed="0.000108"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.593949" level="INFO">${client_secret} = </msg>
+<var>${client_secret}</var>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.593863" elapsed="0.000097"/>
+</kw>
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2026-03-29T11:30:07.594044" level="INFO">Creating Session using : alias=keycloak, url=http://localhost:8080, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>keycloak</arg>
+<arg>http://localhost:8080</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2026-03-29T11:30:07.593998" elapsed="0.000109"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.594285" level="INFO">${data} = grant_type=password&amp;client_id=nexora-api&amp;username=admin@nexora.com&amp;password=admin123</msg>
+<var>${data}</var>
+<arg>grant_type=password&amp;client_id=${client_id}&amp;username=${username}&amp;password=${password}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.594147" elapsed="0.000149"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.594461" level="INFO">${headers} = {'Content-Type': 'application/x-www-form-urlencoded'}</msg>
+<var>${headers}</var>
+<arg>Content-Type=application/x-www-form-urlencoded</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.594344" elapsed="0.000128"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-03-29T11:30:07.631735" level="INFO">POST Request : url=http://localhost:8080/realms/nexora/protocol/openid-connect/token 
+ path_url=/realms/nexora/protocol/openid-connect/token 
+ headers={'User-Agent': 'python-requests/2.33.0', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/x-www-form-urlencoded', 'Content-Length': '84'} 
+ body=grant_type=password&amp;client_id=nexora-api&amp;username=admin@nexora.com&amp;password=admin123 
+ </msg>
+<msg time="2026-03-29T11:30:07.631793" level="INFO">POST Response : url=http://localhost:8080/realms/nexora/protocol/openid-connect/token 
+ status=200, reason=OK 
+ headers={'Cache-Control': 'no-store', 'Pragma': 'no-cache', 'content-length': '1869', 'Content-Type': 'application/json', 'Referrer-Policy': 'no-referrer', 'Strict-Transport-Security': 'max-age=31536000; includeSubDomains', 'X-Content-Type-Options': 'nosniff', 'X-Frame-Options': 'SAMEORIGIN', 'X-XSS-Protection': '1; mode=block'} 
+ body={"access_token":"eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWUnRFY2lDLTJvRnZXZnU1cG9SbU1OVzdrWnpaS0VVNGNTSU83SlZxZlR3In0.eyJleHAiOjE3NzQ3OTgyMDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiOWYxZWU4N2UtMjNmMS00ZDRkLTg0OWQtNzFkYTg5MjgzOTBmIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9uZXhvcmEiLCJhdWQiOiJuZXhvcmEtYXBpIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoibmV4b3JhLWFwaSIsInNpZCI6IjBmNjMyYTAwLWU5MzAtNDQyNi04Mjc4LTdlMzQwNjQyM2E3NCIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiYWRtaW4iXX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoiQWRtaW4gTmV4b3JhIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYWRtaW5AbmV4b3JhLmNvbSIsImdpdmVuX25hbWUiOiJBZG1pbiIsImZhbWlseV9uYW1lIjoiTmV4b3JhIiwiZW1haWwiOiJhZG1pbkBuZXhvcmEuY29tIn0.Kc24EmQ8E9LUPVupW3kRLxtpam9K5aKDamKmwh2obOFUMcqWiLTgh-glug72TqpDq58i3sX6aEIF1yNK-oaZO59zt6u8FVQrA3NGYgabZl2QVlTBbAHJ5RlULSs9npxzKo6rDpxIxEbzJYmpe1SASpoZ0-be-AzPFlAmQeFHk7skpawDyA4P9bO3YsrHfmDMzY-XlIMt6vVkgoWut2aBevkQwThB8nAu5uIN5gXOvzGkkl21udaGooE1l0GQ-JRkoELwOSCZ3pTdfcU5AXeyCPG0lBIZXa9rPqbcBWP7MKruct-sKJJNpraMsvv42jXmo8KHn_AfSsEP3g2zS8mhlQ","expires_in":3600,"refresh_expires_in":1800,"refresh_token":"eyJhbGciOiJIUzUxMiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJjYmRlNzhhOC1mMTkwLTRkZjEtOGYxNC05YWUyOGM0NzI1NzIifQ.eyJleHAiOjE3NzQ3OTY0MDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiZTIwMTNkZTEtYzA1Mi00ZjM4LWExNGQtYTU1NTQyMDkzOTg3IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9uZXhvcmEiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvcmVhbG1zL25leG9yYSIsInR5cCI6IlJlZnJlc2giLCJhenAiOiJuZXhvcmEtYXBpIiwic2lkIjoiMGY2MzJhMDAtZTkzMC00NDI2LTgyNzgtN2UzNDA2NDIzYTc0Iiwic2NvcGUiOiJ3ZWItb3JpZ2lucyBhY3IgZW1haWwgcHJvZmlsZSByb2xlcyJ9.3NhIBgkY_u5Uk2KzCOFD4WwTbuqrsaJNKQ025MFoKBlpfeHkgBukrJHOygOJYMeooX-3Le3mKjWJt78JkLEpTg","token_type":"Bearer","not-before-policy":0,"session_state":"0f632a00-e930-4426-8278-7e3406423a74","scope":"email profile"} 
+ </msg>
+<msg time="2026-03-29T11:30:07.631870" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>keycloak</arg>
+<arg>/realms/nexora/protocol/openid-connect/token</arg>
+<arg>data=${data}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.594510" elapsed="0.037373"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.632363" level="INFO">${json} = {'access_token': 'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWUnRFY2lDLTJvRnZXZnU1cG9SbU1OVzdrWnpaS0VVNGNTSU83SlZxZlR3In0.eyJleHAiOjE3NzQ3OTgyMDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiOWYxZWU4N2UtMj...</msg>
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.631970" elapsed="0.000406"/>
+</kw>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${json}</arg>
+<arg>access_token</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.632422" elapsed="0.000136"/>
+</kw>
+<return>
+<value>${json}[access_token]</value>
+<status status="PASS" start="2026-03-29T11:30:07.632584" elapsed="0.000020"/>
+</return>
+<msg time="2026-03-29T11:30:07.632669" level="INFO">${token} = eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWUnRFY2lDLTJvRnZXZnU1cG9SbU1OVzdrWnpaS0VVNGNTSU83SlZxZlR3In0.eyJleHAiOjE3NzQ3OTgyMDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiOWYxZWU4N2UtMjNmMS00ZDRkLTg0OWQt...</msg>
+<var>${token}</var>
+<arg>${ADMIN_USER}</arg>
+<arg>${ADMIN_PASS}</arg>
+<status status="PASS" start="2026-03-29T11:30:07.593433" elapsed="0.039246"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.632893" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWUnRFY2lDLTJvRnZXZnU1cG9SbU1OVzdrWnpaS0VVNGNTSU83SlZxZlR3In0.eyJleHAiOjE3NzQ3OTgyMDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiOWYxZW...</msg>
+<var>${headers}</var>
+<arg>Authorization=Bearer ${token}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.632731" elapsed="0.000174"/>
+</kw>
+<kw name="Get Time" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.633071" level="INFO">${timestamp} = 1774794607</msg>
+<var>${timestamp}</var>
+<arg>epoch</arg>
+<doc>Returns the given time in the requested format.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.632959" elapsed="0.000122"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.633223" level="INFO">${email} = testteacher1774794607@nexora.com</msg>
+<var>${email}</var>
+<arg>testteacher${timestamp}@nexora.com</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.633120" elapsed="0.000114"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.633371" level="INFO">${identity_id} = test-identity-teacher-1774794607</msg>
+<var>${identity_id}</var>
+<arg>test-identity-teacher-${timestamp}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.633271" elapsed="0.000110"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.633607" level="INFO">${body} = {'identityId': 'test-identity-teacher-1774794607', 'name': 'Professor Teste 1774794607', 'email': 'testteacher1774794607@nexora.com', 'role': 'teacher', 'status': 'active', 'description': 'Professor d...</msg>
+<var>${body}</var>
+<arg>identityId=${identity_id}</arg>
+<arg>name=Professor Teste ${timestamp}</arg>
+<arg>email=${email}</arg>
+<arg>role=teacher</arg>
+<arg>status=active</arg>
+<arg>description=Professor de APIs</arg>
+<arg>subject=Matemática</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.633421" elapsed="0.000198"/>
+</kw>
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2026-03-29T11:30:07.633719" level="INFO">Creating Session using : alias=admin, url=http://localhost:3000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>admin</arg>
+<arg>${BASE_URL}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2026-03-29T11:30:07.633666" elapsed="0.000119"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-03-29T11:30:07.640457" level="INFO">POST Request : url=http://localhost:3000/api/v1/users 
+ path_url=/api/v1/users 
+ headers={'User-Agent': 'python-requests/2.33.0', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWUnRFY2lDLTJvRnZXZnU1cG9SbU1OVzdrWnpaS0VVNGNTSU83SlZxZlR3In0.eyJleHAiOjE3NzQ3OTgyMDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiOWYxZWU4N2UtMjNmMS00ZDRkLTg0OWQtNzFkYTg5MjgzOTBmIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9uZXhvcmEiLCJhdWQiOiJuZXhvcmEtYXBpIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoibmV4b3JhLWFwaSIsInNpZCI6IjBmNjMyYTAwLWU5MzAtNDQyNi04Mjc4LTdlMzQwNjQyM2E3NCIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiYWRtaW4iXX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoiQWRtaW4gTmV4b3JhIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYWRtaW5AbmV4b3JhLmNvbSIsImdpdmVuX25hbWUiOiJBZG1pbiIsImZhbWlseV9uYW1lIjoiTmV4b3JhIiwiZW1haWwiOiJhZG1pbkBuZXhvcmEuY29tIn0.Kc24EmQ8E9LUPVupW3kRLxtpam9K5aKDamKmwh2obOFUMcqWiLTgh-glug72TqpDq58i3sX6aEIF1yNK-oaZO59zt6u8FVQrA3NGYgabZl2QVlTBbAHJ5RlULSs9npxzKo6rDpxIxEbzJYmpe1SASpoZ0-be-AzPFlAmQeFHk7skpawDyA4P9bO3YsrHfmDMzY-XlIMt6vVkgoWut2aBevkQwThB8nAu5uIN5gXOvzGkkl21udaGooE1l0GQ-JRkoELwOSCZ3pTdfcU5AXeyCPG0lBIZXa9rPqbcBWP7MKruct-sKJJNpraMsvv42jXmo8KHn_AfSsEP3g2zS8mhlQ', 'Content-Length': '238', 'Content-Type': 'application/json'} 
+ body=b'{"identityId": "test-identity-teacher-1774794607", "name": "Professor Teste 1774794607", "email": "testteacher1774794607@nexora.com", "role": "teacher", "status": "active", "description": "Professor de APIs", "subject": "Matem\\u00e1tica"}' 
+ </msg>
+<msg time="2026-03-29T11:30:07.640511" level="INFO">POST Response : url=http://localhost:3000/api/v1/users 
+ status=201, reason=Created 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'x-correlation-id': 'b6e8ad2e-5712-441e-bfa3-d2ed73aaf19a', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '385', 'ETag': 'W/"181-kwzxtBNwThW4sMH9MDb2MUjYqUs"', 'Date': 'Sun, 29 Mar 2026 14:30:07 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"data":{"id":"69c9376f65a5229cddca1c5e","identityId":"test-identity-teacher-1774794607","name":"Professor Teste 1774794607","email":"testteacher1774794607@nexora.com","role":"teacher","status":"active","createdAt":"2026-03-29T14:30:07.638Z","updatedAt":"2026-03-29T14:30:07.638Z"},"meta":{"correlationId":"b6e8ad2e-5712-441e-bfa3-d2ed73aaf19a","timestamp":"2026-03-29T14:30:07.639Z"}} 
+ </msg>
+<msg time="2026-03-29T11:30:07.640572" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>admin</arg>
+<arg>${API_PREFIX}/users</arg>
+<arg>headers=${headers}</arg>
+<arg>json=${body}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.633826" elapsed="0.006757"/>
+</kw>
+<kw name="Status Should Be" owner="RequestsLibrary">
+<arg>201</arg>
+<arg>${response}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.640658" elapsed="0.000100"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.641166" level="INFO">${json} = {'data': {'id': '69c9376f65a5229cddca1c5e', 'identityId': 'test-identity-teacher-1774794607', 'name': 'Professor Teste 1774794607', 'email': 'testteacher1774794607@nexora.com', 'role': 'teacher', 'sta...</msg>
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.640802" elapsed="0.000377"/>
+</kw>
+<kw name="Dictionary Should Contain Key" owner="Collections">
+<arg>${json['data']}</arg>
+<arg>id</arg>
+<doc>Fails if ``key`` is not found from ``dictionary``.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.641223" elapsed="0.000242"/>
+</kw>
+<tag>admin</tag>
+<tag>create</tag>
+<tag>teacher</tag>
+<tag>users</tag>
+<status status="PASS" start="2026-03-29T11:30:07.593228" elapsed="0.048288"/>
+</test>
+<doc>Teste E2E para criação de usuário via API Nexora Academy</doc>
+<status status="PASS" start="2026-03-29T11:30:07.531105" elapsed="0.110588"/>
+</suite>
+<suite id="s1-s4" name="Enrollments" source="/Users/cliente/Documents/xpe/nexora-academy-api/tests/robot/enrollments.robot">
+<test id="s1-s4-t1" name="Admin Should List Enrollments" line="15">
+<kw name="Get Token" owner="keywords">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.643261" level="INFO">${keycloak_url} = http://localhost:8080/realms/nexora/protocol/openid-connect/token</msg>
+<var>${keycloak_url}</var>
+<arg>http://localhost:8080/realms/nexora/protocol/openid-connect/token</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.643151" elapsed="0.000122"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.643413" level="INFO">${client_id} = nexora-api</msg>
+<var>${client_id}</var>
+<arg>nexora-api</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.643314" elapsed="0.000110"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.643556" level="INFO">${client_secret} = </msg>
+<var>${client_secret}</var>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.643467" elapsed="0.000099"/>
+</kw>
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2026-03-29T11:30:07.643644" level="INFO">Creating Session using : alias=keycloak, url=http://localhost:8080, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>keycloak</arg>
+<arg>http://localhost:8080</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2026-03-29T11:30:07.643605" elapsed="0.000112"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.643899" level="INFO">${data} = grant_type=password&amp;client_id=nexora-api&amp;username=admin@nexora.com&amp;password=admin123</msg>
+<var>${data}</var>
+<arg>grant_type=password&amp;client_id=${client_id}&amp;username=${username}&amp;password=${password}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.643758" elapsed="0.000153"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.644071" level="INFO">${headers} = {'Content-Type': 'application/x-www-form-urlencoded'}</msg>
+<var>${headers}</var>
+<arg>Content-Type=application/x-www-form-urlencoded</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.643956" elapsed="0.000126"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-03-29T11:30:07.684651" level="INFO">POST Request : url=http://localhost:8080/realms/nexora/protocol/openid-connect/token 
+ path_url=/realms/nexora/protocol/openid-connect/token 
+ headers={'User-Agent': 'python-requests/2.33.0', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/x-www-form-urlencoded', 'Content-Length': '84'} 
+ body=grant_type=password&amp;client_id=nexora-api&amp;username=admin@nexora.com&amp;password=admin123 
+ </msg>
+<msg time="2026-03-29T11:30:07.684706" level="INFO">POST Response : url=http://localhost:8080/realms/nexora/protocol/openid-connect/token 
+ status=200, reason=OK 
+ headers={'Cache-Control': 'no-store', 'Pragma': 'no-cache', 'content-length': '1869', 'Content-Type': 'application/json', 'Referrer-Policy': 'no-referrer', 'Strict-Transport-Security': 'max-age=31536000; includeSubDomains', 'X-Content-Type-Options': 'nosniff', 'X-Frame-Options': 'SAMEORIGIN', 'X-XSS-Protection': '1; mode=block'} 
+ body={"access_token":"eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWUnRFY2lDLTJvRnZXZnU1cG9SbU1OVzdrWnpaS0VVNGNTSU83SlZxZlR3In0.eyJleHAiOjE3NzQ3OTgyMDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiMThmZmRmYmItNDAyZi00OGFlLTlmZWUtZDU1OWJmOWFmMThkIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9uZXhvcmEiLCJhdWQiOiJuZXhvcmEtYXBpIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoibmV4b3JhLWFwaSIsInNpZCI6IjkyMzViMzU5LTQwNzktNDliZS04NWE0LWNlN2VmYWU2NDQ0NiIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiYWRtaW4iXX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoiQWRtaW4gTmV4b3JhIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYWRtaW5AbmV4b3JhLmNvbSIsImdpdmVuX25hbWUiOiJBZG1pbiIsImZhbWlseV9uYW1lIjoiTmV4b3JhIiwiZW1haWwiOiJhZG1pbkBuZXhvcmEuY29tIn0.RU8UkXuWBxOh45qEXoH0dHuyjUqENZKTc3cKMvQ40s5_bqE1xL00Pf0ASFrEM7_ezv90uogGLn1-KIVALeXztYYocOZY5ds7uMT-twmxOvACvS9i0sGNMOMt7XI_3YAgXP7oAMYXGiPHBh9Wn4AC16fr4I2R6jBFZ-JaogzQwPW3-S0XGauDRuRNjwYiwWoitR2CEWGQCNgPpiZKyauOHQOVSiCm5ukjo_aYm3BzFL5c1qRrWnbITxTYFpiXKWc6xCLLWhJwBLWUPHO3YrcqSUtD_Bk0ZFAlB-zPfaScDJazepRLArQqQOLdPUwMXlq95hNsOkowU9L9iBcVYIZVfw","expires_in":3600,"refresh_expires_in":1800,"refresh_token":"eyJhbGciOiJIUzUxMiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJjYmRlNzhhOC1mMTkwLTRkZjEtOGYxNC05YWUyOGM0NzI1NzIifQ.eyJleHAiOjE3NzQ3OTY0MDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiZDU5YmFkYTctZjU4ZS00MzFiLWJhODItOGVjNjkxZTk2NWIyIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9uZXhvcmEiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvcmVhbG1zL25leG9yYSIsInR5cCI6IlJlZnJlc2giLCJhenAiOiJuZXhvcmEtYXBpIiwic2lkIjoiOTIzNWIzNTktNDA3OS00OWJlLTg1YTQtY2U3ZWZhZTY0NDQ2Iiwic2NvcGUiOiJ3ZWItb3JpZ2lucyBhY3IgZW1haWwgcHJvZmlsZSByb2xlcyJ9.D86yCH-GQBpl_s8WwWG4JzzI-v4xfuv3ira1Fxi4C0k3URVPWLwKJaCOUUoe6fqrJXbHlUCHDaln0vUscN_mYQ","token_type":"Bearer","not-before-policy":0,"session_state":"9235b359-4079-49be-85a4-ce7efae64446","scope":"email profile"} 
+ </msg>
+<msg time="2026-03-29T11:30:07.684782" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>keycloak</arg>
+<arg>/realms/nexora/protocol/openid-connect/token</arg>
+<arg>data=${data}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.644119" elapsed="0.040675"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.685274" level="INFO">${json} = {'access_token': 'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWUnRFY2lDLTJvRnZXZnU1cG9SbU1OVzdrWnpaS0VVNGNTSU83SlZxZlR3In0.eyJleHAiOjE3NzQ3OTgyMDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiMThmZmRmYmItND...</msg>
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.684877" elapsed="0.000410"/>
+</kw>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${json}</arg>
+<arg>access_token</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.685330" elapsed="0.000132"/>
+</kw>
+<return>
+<value>${json}[access_token]</value>
+<status status="PASS" start="2026-03-29T11:30:07.685488" elapsed="0.000021"/>
+</return>
+<msg time="2026-03-29T11:30:07.685572" level="INFO">${token} = eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWUnRFY2lDLTJvRnZXZnU1cG9SbU1OVzdrWnpaS0VVNGNTSU83SlZxZlR3In0.eyJleHAiOjE3NzQ3OTgyMDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiMThmZmRmYmItNDAyZi00OGFlLTlmZWUt...</msg>
+<var>${token}</var>
+<arg>${ADMIN_USER}</arg>
+<arg>${ADMIN_PASS}</arg>
+<status status="PASS" start="2026-03-29T11:30:07.643014" elapsed="0.042569"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.685781" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWUnRFY2lDLTJvRnZXZnU1cG9SbU1OVzdrWnpaS0VVNGNTSU83SlZxZlR3In0.eyJleHAiOjE3NzQ3OTgyMDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiMThmZm...</msg>
+<var>${headers}</var>
+<arg>Authorization=Bearer ${token}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.685634" elapsed="0.000168"/>
+</kw>
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2026-03-29T11:30:07.685894" level="INFO">Creating Session using : alias=admin, url=http://localhost:3000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>admin</arg>
+<arg>${BASE_URL}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2026-03-29T11:30:07.685844" elapsed="0.000119"/>
+</kw>
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-03-29T11:30:07.692666" level="INFO">GET Request : url=http://localhost:3000/api/v1/enrollments 
+ path_url=/api/v1/enrollments 
+ headers={'User-Agent': 'python-requests/2.33.0', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWUnRFY2lDLTJvRnZXZnU1cG9SbU1OVzdrWnpaS0VVNGNTSU83SlZxZlR3In0.eyJleHAiOjE3NzQ3OTgyMDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiMThmZmRmYmItNDAyZi00OGFlLTlmZWUtZDU1OWJmOWFmMThkIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9uZXhvcmEiLCJhdWQiOiJuZXhvcmEtYXBpIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoibmV4b3JhLWFwaSIsInNpZCI6IjkyMzViMzU5LTQwNzktNDliZS04NWE0LWNlN2VmYWU2NDQ0NiIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiYWRtaW4iXX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoiQWRtaW4gTmV4b3JhIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYWRtaW5AbmV4b3JhLmNvbSIsImdpdmVuX25hbWUiOiJBZG1pbiIsImZhbWlseV9uYW1lIjoiTmV4b3JhIiwiZW1haWwiOiJhZG1pbkBuZXhvcmEuY29tIn0.RU8UkXuWBxOh45qEXoH0dHuyjUqENZKTc3cKMvQ40s5_bqE1xL00Pf0ASFrEM7_ezv90uogGLn1-KIVALeXztYYocOZY5ds7uMT-twmxOvACvS9i0sGNMOMt7XI_3YAgXP7oAMYXGiPHBh9Wn4AC16fr4I2R6jBFZ-JaogzQwPW3-S0XGauDRuRNjwYiwWoitR2CEWGQCNgPpiZKyauOHQOVSiCm5ukjo_aYm3BzFL5c1qRrWnbITxTYFpiXKWc6xCLLWhJwBLWUPHO3YrcqSUtD_Bk0ZFAlB-zPfaScDJazepRLArQqQOLdPUwMXlq95hNsOkowU9L9iBcVYIZVfw'} 
+ body=None 
+ </msg>
+<msg time="2026-03-29T11:30:07.692724" level="INFO">GET Response : url=http://localhost:3000/api/v1/enrollments 
+ status=200, reason=OK 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'x-correlation-id': '15154567-dd4a-4595-823f-6193163f6c4d', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '114', 'ETag': 'W/"72-TvIARl+Kv+qLezr6XX7tqSapCRI"', 'Date': 'Sun, 29 Mar 2026 14:30:07 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"data":[],"meta":{"correlationId":"15154567-dd4a-4595-823f-6193163f6c4d","timestamp":"2026-03-29T14:30:07.692Z"}} 
+ </msg>
+<msg time="2026-03-29T11:30:07.692788" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>admin</arg>
+<arg>${API_PREFIX}/enrollments</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.686004" elapsed="0.006800"/>
+</kw>
+<kw name="Status Should Be" owner="RequestsLibrary">
+<arg>200</arg>
+<arg>${response}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.692886" elapsed="0.000128"/>
+</kw>
+<tag>admin</tag>
+<tag>enrollments</tag>
+<status status="PASS" start="2026-03-29T11:30:07.642816" elapsed="0.050249"/>
+</test>
+<test id="s1-s4-t2" name="Support Should List Enrollments" line="24">
+<kw name="Get Token" owner="keywords">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.693672" level="INFO">${keycloak_url} = http://localhost:8080/realms/nexora/protocol/openid-connect/token</msg>
+<var>${keycloak_url}</var>
+<arg>http://localhost:8080/realms/nexora/protocol/openid-connect/token</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.693542" elapsed="0.000141"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.693820" level="INFO">${client_id} = nexora-api</msg>
+<var>${client_id}</var>
+<arg>nexora-api</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.693724" elapsed="0.000107"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.693960" level="INFO">${client_secret} = </msg>
+<var>${client_secret}</var>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.693870" elapsed="0.000100"/>
+</kw>
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2026-03-29T11:30:07.694044" level="INFO">Creating Session using : alias=keycloak, url=http://localhost:8080, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>keycloak</arg>
+<arg>http://localhost:8080</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2026-03-29T11:30:07.694007" elapsed="0.000117"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.694306" level="INFO">${data} = grant_type=password&amp;client_id=nexora-api&amp;username=support@nexora.com&amp;password=support123</msg>
+<var>${data}</var>
+<arg>grant_type=password&amp;client_id=${client_id}&amp;username=${username}&amp;password=${password}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.694167" elapsed="0.000150"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.694481" level="INFO">${headers} = {'Content-Type': 'application/x-www-form-urlencoded'}</msg>
+<var>${headers}</var>
+<arg>Content-Type=application/x-www-form-urlencoded</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.694361" elapsed="0.000158"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-03-29T11:30:07.791479" level="INFO">POST Request : url=http://localhost:8080/realms/nexora/protocol/openid-connect/token 
+ path_url=/realms/nexora/protocol/openid-connect/token 
+ headers={'User-Agent': 'python-requests/2.33.0', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/x-www-form-urlencoded', 'Content-Length': '88'} 
+ body=grant_type=password&amp;client_id=nexora-api&amp;username=support@nexora.com&amp;password=support123 
+ </msg>
+<msg time="2026-03-29T11:30:07.791545" level="INFO">POST Response : url=http://localhost:8080/realms/nexora/protocol/openid-connect/token 
+ status=200, reason=OK 
+ headers={'Cache-Control': 'no-store', 'Pragma': 'no-cache', 'content-length': '1882', 'Content-Type': 'application/json', 'Referrer-Policy': 'no-referrer', 'Strict-Transport-Security': 'max-age=31536000; includeSubDomains', 'X-Content-Type-Options': 'nosniff', 'X-Frame-Options': 'SAMEORIGIN', 'X-XSS-Protection': '1; mode=block'} 
+ body={"access_token":"eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWUnRFY2lDLTJvRnZXZnU1cG9SbU1OVzdrWnpaS0VVNGNTSU83SlZxZlR3In0.eyJleHAiOjE3NzQ3OTgyMDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiNmE0YmJiNjYtYjBjYS00YjNlLTkwZWYtMzc2ZjkwMTlmODBmIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9uZXhvcmEiLCJhdWQiOiJuZXhvcmEtYXBpIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoibmV4b3JhLWFwaSIsInNpZCI6ImM3NDI5NzRlLTgwMjYtNGUzYy1iZTgzLTFhOWZlM2JjYmM3NiIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsic3VwcG9ydCJdfSwic2NvcGUiOiJlbWFpbCBwcm9maWxlIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5hbWUiOiJTdXBvcnRlIE5leG9yYSIsInByZWZlcnJlZF91c2VybmFtZSI6InN1cHBvcnRAbmV4b3JhLmNvbSIsImdpdmVuX25hbWUiOiJTdXBvcnRlIiwiZmFtaWx5X25hbWUiOiJOZXhvcmEiLCJlbWFpbCI6InN1cHBvcnRAbmV4b3JhLmNvbSJ9.H6vG6rohOOVZDdmvSluFrz_MrBU9YsX1BokkdDMmNHL87mJSd6GNEplLB7dx6FqupS4NduUK0VL5q36fStseypXHH3iK_t92PU2XmWJ-pgcPKPQl-sbZiMTRghyFBzqL4woQgTaF5NpuyYeMaFGGgyWK2j7Wpz_vSk6LZqvavUJ7H89KR-3oBqIHYkZk9f2g-5qwKzH2ZCFNuuTl7KhooUrbOtnpQLIJMDlt7Ss6x0w2_ts6ThjuU9FSLcu-EP8YTLxYjzqhWEAfRWsuUII-6RqUcgnbfsFVePoliOKEW-tFS-MfWbYUDQ7LXO-9tzzSZrmCc5vGcHQXtMpojIznYw","expires_in":3600,"refresh_expires_in":1800,"refresh_token":"eyJhbGciOiJIUzUxMiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJjYmRlNzhhOC1mMTkwLTRkZjEtOGYxNC05YWUyOGM0NzI1NzIifQ.eyJleHAiOjE3NzQ3OTY0MDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiMDBhMDkzZDUtMzEzMS00ODg2LTlkMmYtOWU2NTFhMTdlMTIyIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9uZXhvcmEiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvcmVhbG1zL25leG9yYSIsInR5cCI6IlJlZnJlc2giLCJhenAiOiJuZXhvcmEtYXBpIiwic2lkIjoiYzc0Mjk3NGUtODAyNi00ZTNjLWJlODMtMWE5ZmUzYmNiYzc2Iiwic2NvcGUiOiJ3ZWItb3JpZ2lucyBhY3IgZW1haWwgcHJvZmlsZSByb2xlcyJ9.m6EDMPY4DusofUz4j5LI0GRHiHA-2NjoyVfScEUxSnRVkJvNBKhVOavVayeaIxCGbexBx5BNftj8vkjCh0jE8A","token_type":"Bearer","not-before-policy":0,"session_state":"c742974e-8026-4e3c-be83-1a9fe3bcbc76","scope":"email profile"} 
+ </msg>
+<msg time="2026-03-29T11:30:07.791627" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>keycloak</arg>
+<arg>/realms/nexora/protocol/openid-connect/token</arg>
+<arg>data=${data}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.694581" elapsed="0.097059"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.792143" level="INFO">${json} = {'access_token': 'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWUnRFY2lDLTJvRnZXZnU1cG9SbU1OVzdrWnpaS0VVNGNTSU83SlZxZlR3In0.eyJleHAiOjE3NzQ3OTgyMDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiNmE0YmJiNjYtYj...</msg>
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.791730" elapsed="0.000427"/>
+</kw>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${json}</arg>
+<arg>access_token</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.792204" elapsed="0.000138"/>
+</kw>
+<return>
+<value>${json}[access_token]</value>
+<status status="PASS" start="2026-03-29T11:30:07.792368" elapsed="0.000019"/>
+</return>
+<msg time="2026-03-29T11:30:07.792463" level="INFO">${token} = eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWUnRFY2lDLTJvRnZXZnU1cG9SbU1OVzdrWnpaS0VVNGNTSU83SlZxZlR3In0.eyJleHAiOjE3NzQ3OTgyMDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiNmE0YmJiNjYtYjBjYS00YjNlLTkwZWYt...</msg>
+<var>${token}</var>
+<arg>${SUPPORT_USER}</arg>
+<arg>${SUPPORT_PASS}</arg>
+<status status="PASS" start="2026-03-29T11:30:07.693398" elapsed="0.099076"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.792678" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWUnRFY2lDLTJvRnZXZnU1cG9SbU1OVzdrWnpaS0VVNGNTSU83SlZxZlR3In0.eyJleHAiOjE3NzQ3OTgyMDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiNmE0Ym...</msg>
+<var>${headers}</var>
+<arg>Authorization=Bearer ${token}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.792525" elapsed="0.000165"/>
+</kw>
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2026-03-29T11:30:07.792783" level="INFO">Creating Session using : alias=support, url=http://localhost:3000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>support</arg>
+<arg>${BASE_URL}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2026-03-29T11:30:07.792731" elapsed="0.000115"/>
+</kw>
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-03-29T11:30:07.797461" level="INFO">GET Request : url=http://localhost:3000/api/v1/enrollments 
+ path_url=/api/v1/enrollments 
+ headers={'User-Agent': 'python-requests/2.33.0', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWUnRFY2lDLTJvRnZXZnU1cG9SbU1OVzdrWnpaS0VVNGNTSU83SlZxZlR3In0.eyJleHAiOjE3NzQ3OTgyMDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiNmE0YmJiNjYtYjBjYS00YjNlLTkwZWYtMzc2ZjkwMTlmODBmIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9uZXhvcmEiLCJhdWQiOiJuZXhvcmEtYXBpIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoibmV4b3JhLWFwaSIsInNpZCI6ImM3NDI5NzRlLTgwMjYtNGUzYy1iZTgzLTFhOWZlM2JjYmM3NiIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsic3VwcG9ydCJdfSwic2NvcGUiOiJlbWFpbCBwcm9maWxlIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5hbWUiOiJTdXBvcnRlIE5leG9yYSIsInByZWZlcnJlZF91c2VybmFtZSI6InN1cHBvcnRAbmV4b3JhLmNvbSIsImdpdmVuX25hbWUiOiJTdXBvcnRlIiwiZmFtaWx5X25hbWUiOiJOZXhvcmEiLCJlbWFpbCI6InN1cHBvcnRAbmV4b3JhLmNvbSJ9.H6vG6rohOOVZDdmvSluFrz_MrBU9YsX1BokkdDMmNHL87mJSd6GNEplLB7dx6FqupS4NduUK0VL5q36fStseypXHH3iK_t92PU2XmWJ-pgcPKPQl-sbZiMTRghyFBzqL4woQgTaF5NpuyYeMaFGGgyWK2j7Wpz_vSk6LZqvavUJ7H89KR-3oBqIHYkZk9f2g-5qwKzH2ZCFNuuTl7KhooUrbOtnpQLIJMDlt7Ss6x0w2_ts6ThjuU9FSLcu-EP8YTLxYjzqhWEAfRWsuUII-6RqUcgnbfsFVePoliOKEW-tFS-MfWbYUDQ7LXO-9tzzSZrmCc5vGcHQXtMpojIznYw'} 
+ body=None 
+ </msg>
+<msg time="2026-03-29T11:30:07.797511" level="INFO">GET Response : url=http://localhost:3000/api/v1/enrollments 
+ status=200, reason=OK 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'x-correlation-id': 'b765b574-41e6-4d5a-ae46-4d66030f0ff8', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '114', 'ETag': 'W/"72-Ot2JUyVu7HoD2cHcyOUWxnMPY00"', 'Date': 'Sun, 29 Mar 2026 14:30:07 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"data":[],"meta":{"correlationId":"b765b574-41e6-4d5a-ae46-4d66030f0ff8","timestamp":"2026-03-29T14:30:07.796Z"}} 
+ </msg>
+<msg time="2026-03-29T11:30:07.797574" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>support</arg>
+<arg>${API_PREFIX}/enrollments</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.792887" elapsed="0.004699"/>
+</kw>
+<kw name="Status Should Be" owner="RequestsLibrary">
+<arg>200</arg>
+<arg>${response}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.797655" elapsed="0.000092"/>
+</kw>
+<tag>enrollments</tag>
+<tag>support</tag>
+<status status="PASS" start="2026-03-29T11:30:07.693185" elapsed="0.104615"/>
+</test>
+<doc>Testes E2E para API Nexora Academy - Inscrições</doc>
+<status status="PASS" start="2026-03-29T11:30:07.641908" elapsed="0.156057"/>
+</suite>
+<suite id="s1-s5" name="Health" source="/Users/cliente/Documents/xpe/nexora-academy-api/tests/robot/health.robot">
+<test id="s1-s5-t1" name="Health Endpoint Should Return 200" line="10">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2026-03-29T11:30:07.799005" level="INFO">Creating Session using : alias=nexora, url=http://localhost:3000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>nexora</arg>
+<arg>${BASE_URL}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2026-03-29T11:30:07.798949" elapsed="0.000117"/>
+</kw>
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-03-29T11:30:07.800794" level="INFO">GET Request : url=http://localhost:3000/api/v1/health 
+ path_url=/api/v1/health 
+ headers={'User-Agent': 'python-requests/2.33.0', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2026-03-29T11:30:07.800828" level="INFO">GET Response : url=http://localhost:3000/api/v1/health 
+ status=200, reason=OK 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'x-correlation-id': 'e4a23e5b-5381-4a87-922d-02d0d1d513e5', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '197', 'ETag': 'W/"c5-HdAlJ0QHQkd2eC1CKqZGgFBYAxk"', 'Date': 'Sun, 29 Mar 2026 14:30:07 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"data":{"status":"ok","service":"nexora-academy-api","timestamp":"2026-03-29T14:30:07.800Z"},"meta":{"correlationId":"e4a23e5b-5381-4a87-922d-02d0d1d513e5","timestamp":"2026-03-29T14:30:07.800Z"}} 
+ </msg>
+<msg time="2026-03-29T11:30:07.800872" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>nexora</arg>
+<arg>${API_PREFIX}/health</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.799108" elapsed="0.001774"/>
+</kw>
+<kw name="Status Should Be" owner="RequestsLibrary">
+<arg>200</arg>
+<arg>${response}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.800934" elapsed="0.000073"/>
+</kw>
+<status status="PASS" start="2026-03-29T11:30:07.798814" elapsed="0.002235"/>
+</test>
+<doc>Smoke test da API Nexora Academy</doc>
+<status status="PASS" start="2026-03-29T11:30:07.798160" elapsed="0.003004"/>
+</suite>
+<suite id="s1-s6" name="Teacher" source="/Users/cliente/Documents/xpe/nexora-academy-api/tests/robot/teacher.robot">
+<test id="s1-s6-t1" name="Admin Should Create Teacher" line="8">
+<kw name="Get Token" owner="keywords">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.802559" level="INFO">${keycloak_url} = http://localhost:8080/realms/nexora/protocol/openid-connect/token</msg>
+<var>${keycloak_url}</var>
+<arg>http://localhost:8080/realms/nexora/protocol/openid-connect/token</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.802421" elapsed="0.000152"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.802734" level="INFO">${client_id} = nexora-api</msg>
+<var>${client_id}</var>
+<arg>nexora-api</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.802621" elapsed="0.000124"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.802880" level="INFO">${client_secret} = </msg>
+<var>${client_secret}</var>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.802787" elapsed="0.000104"/>
+</kw>
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2026-03-29T11:30:07.802981" level="INFO">Creating Session using : alias=keycloak, url=http://localhost:8080, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>keycloak</arg>
+<arg>http://localhost:8080</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2026-03-29T11:30:07.802941" elapsed="0.000096"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.803342" level="INFO">${data} = grant_type=password&amp;client_id=nexora-api&amp;username=admin@nexora.com&amp;password=admin123</msg>
+<var>${data}</var>
+<arg>grant_type=password&amp;client_id=${client_id}&amp;username=${username}&amp;password=${password}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.803078" elapsed="0.000288"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.803622" level="INFO">${headers} = {'Content-Type': 'application/x-www-form-urlencoded'}</msg>
+<var>${headers}</var>
+<arg>Content-Type=application/x-www-form-urlencoded</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.803451" elapsed="0.000183"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-03-29T11:30:07.837252" level="INFO">POST Request : url=http://localhost:8080/realms/nexora/protocol/openid-connect/token 
+ path_url=/realms/nexora/protocol/openid-connect/token 
+ headers={'User-Agent': 'python-requests/2.33.0', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/x-www-form-urlencoded', 'Content-Length': '84'} 
+ body=grant_type=password&amp;client_id=nexora-api&amp;username=admin@nexora.com&amp;password=admin123 
+ </msg>
+<msg time="2026-03-29T11:30:07.837308" level="INFO">POST Response : url=http://localhost:8080/realms/nexora/protocol/openid-connect/token 
+ status=200, reason=OK 
+ headers={'Cache-Control': 'no-store', 'Pragma': 'no-cache', 'content-length': '1869', 'Content-Type': 'application/json', 'Referrer-Policy': 'no-referrer', 'Strict-Transport-Security': 'max-age=31536000; includeSubDomains', 'X-Content-Type-Options': 'nosniff', 'X-Frame-Options': 'SAMEORIGIN', 'X-XSS-Protection': '1; mode=block'} 
+ body={"access_token":"eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWUnRFY2lDLTJvRnZXZnU1cG9SbU1OVzdrWnpaS0VVNGNTSU83SlZxZlR3In0.eyJleHAiOjE3NzQ3OTgyMDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiNDgzZGQ1ZDUtZTg3YS00Y2I0LWJhOGItNDhmOWZiNDBmNDYzIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9uZXhvcmEiLCJhdWQiOiJuZXhvcmEtYXBpIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoibmV4b3JhLWFwaSIsInNpZCI6ImVlYTQ1MGQxLWUwN2QtNDg2NS04NDUxLTFmMGRlN2YzODgzMCIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiYWRtaW4iXX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoiQWRtaW4gTmV4b3JhIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYWRtaW5AbmV4b3JhLmNvbSIsImdpdmVuX25hbWUiOiJBZG1pbiIsImZhbWlseV9uYW1lIjoiTmV4b3JhIiwiZW1haWwiOiJhZG1pbkBuZXhvcmEuY29tIn0.WgJTI-GROAv_sNpzsq5-X5yqALV-SJx1K4Jqpz21_BstHwB8Zy8QyvrcratUtZgtbOeOmwdTsCn9MlCe9ppo7M4jplyMA-WeqGXIKQInXcPN4Kk1LjYYEEMzAzFssYJAmK4X6tVlElIlw1cAFssQM5ULjPdXSbL_zAnNEAzIDw6JDMSkOhSw4eKxxCtAwrmrlR3DuZ1fyIYKMhGop3oLo6mJMQ6_bA_3rdBFZc5ATJQEs4tkyndfWJ0deQiN9rVvZScD5rtEcDcRGt4AN-qM96pCKeVjPQBPbDegsY7ZrGF1cTNSqXVvxvm8Tn3JANprjk6qZdfki_d_srsz-CA1sw","expires_in":3600,"refresh_expires_in":1800,"refresh_token":"eyJhbGciOiJIUzUxMiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJjYmRlNzhhOC1mMTkwLTRkZjEtOGYxNC05YWUyOGM0NzI1NzIifQ.eyJleHAiOjE3NzQ3OTY0MDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiODc0NmNiYTgtZmRmYS00YzhmLWEwOTctZWI2MGJkYmNjYjVkIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9uZXhvcmEiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvcmVhbG1zL25leG9yYSIsInR5cCI6IlJlZnJlc2giLCJhenAiOiJuZXhvcmEtYXBpIiwic2lkIjoiZWVhNDUwZDEtZTA3ZC00ODY1LTg0NTEtMWYwZGU3ZjM4ODMwIiwic2NvcGUiOiJ3ZWItb3JpZ2lucyBhY3IgZW1haWwgcHJvZmlsZSByb2xlcyJ9.YAakwMcbjEvCLXMrcpTxldcrwHvvy4G9aOuSPHAWaMtEEcsdZykpiLQP8oXibyR3SQDOQH82BNUf-t7ArUpJSw","token_type":"Bearer","not-before-policy":0,"session_state":"eea450d1-e07d-4865-8451-1f0de7f38830","scope":"email profile"} 
+ </msg>
+<msg time="2026-03-29T11:30:07.837387" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>keycloak</arg>
+<arg>/realms/nexora/protocol/openid-connect/token</arg>
+<arg>data=${data}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.803679" elapsed="0.033720"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.837891" level="INFO">${json} = {'access_token': 'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWUnRFY2lDLTJvRnZXZnU1cG9SbU1OVzdrWnpaS0VVNGNTSU83SlZxZlR3In0.eyJleHAiOjE3NzQ3OTgyMDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiNDgzZGQ1ZDUtZT...</msg>
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.837487" elapsed="0.000416"/>
+</kw>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${json}</arg>
+<arg>access_token</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.837948" elapsed="0.000132"/>
+</kw>
+<return>
+<value>${json}[access_token]</value>
+<status status="PASS" start="2026-03-29T11:30:07.838106" elapsed="0.000019"/>
+</return>
+<msg time="2026-03-29T11:30:07.838186" level="INFO">${token} = eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWUnRFY2lDLTJvRnZXZnU1cG9SbU1OVzdrWnpaS0VVNGNTSU83SlZxZlR3In0.eyJleHAiOjE3NzQ3OTgyMDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiNDgzZGQ1ZDUtZTg3YS00Y2I0LWJhOGIt...</msg>
+<var>${token}</var>
+<arg>${ADMIN_USER}</arg>
+<arg>${ADMIN_PASS}</arg>
+<status status="PASS" start="2026-03-29T11:30:07.802287" elapsed="0.035909"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.838401" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWUnRFY2lDLTJvRnZXZnU1cG9SbU1OVzdrWnpaS0VVNGNTSU83SlZxZlR3In0.eyJleHAiOjE3NzQ3OTgyMDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiNDgzZG...</msg>
+<var>${headers}</var>
+<arg>Authorization=Bearer ${token}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.838246" elapsed="0.000167"/>
+</kw>
+<kw name="Get Time" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.838573" level="INFO">${timestamp} = 1774794607</msg>
+<var>${timestamp}</var>
+<arg>epoch</arg>
+<doc>Returns the given time in the requested format.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.838459" elapsed="0.000124"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.838725" level="INFO">${email} = professor1774794607@nexora.com</msg>
+<var>${email}</var>
+<arg>professor${timestamp}@nexora.com</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.838622" elapsed="0.000113"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.838877" level="INFO">${identity_id} = prof-identity-1774794607</msg>
+<var>${identity_id}</var>
+<arg>prof-identity-${timestamp}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.838773" elapsed="0.000114"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.839117" level="INFO">${body} = {'identityId': 'prof-identity-1774794607', 'name': 'Professor Teste 1774794607', 'email': 'professor1774794607@nexora.com', 'role': 'teacher', 'status': 'active', 'description': 'Professor de APIs', '...</msg>
+<var>${body}</var>
+<arg>identityId=${identity_id}</arg>
+<arg>name=Professor Teste ${timestamp}</arg>
+<arg>email=${email}</arg>
+<arg>role=teacher</arg>
+<arg>status=active</arg>
+<arg>description=Professor de APIs</arg>
+<arg>subject=Matemática</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.838933" elapsed="0.000195"/>
+</kw>
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2026-03-29T11:30:07.839233" level="INFO">Creating Session using : alias=admin, url=http://localhost:3000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>admin</arg>
+<arg>${BASE_URL}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2026-03-29T11:30:07.839186" elapsed="0.000109"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-03-29T11:30:07.845037" level="INFO">POST Request : url=http://localhost:3000/api/v1/users 
+ path_url=/api/v1/users 
+ headers={'User-Agent': 'python-requests/2.33.0', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWUnRFY2lDLTJvRnZXZnU1cG9SbU1OVzdrWnpaS0VVNGNTSU83SlZxZlR3In0.eyJleHAiOjE3NzQ3OTgyMDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiNDgzZGQ1ZDUtZTg3YS00Y2I0LWJhOGItNDhmOWZiNDBmNDYzIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9uZXhvcmEiLCJhdWQiOiJuZXhvcmEtYXBpIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoibmV4b3JhLWFwaSIsInNpZCI6ImVlYTQ1MGQxLWUwN2QtNDg2NS04NDUxLTFmMGRlN2YzODgzMCIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiYWRtaW4iXX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoiQWRtaW4gTmV4b3JhIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYWRtaW5AbmV4b3JhLmNvbSIsImdpdmVuX25hbWUiOiJBZG1pbiIsImZhbWlseV9uYW1lIjoiTmV4b3JhIiwiZW1haWwiOiJhZG1pbkBuZXhvcmEuY29tIn0.WgJTI-GROAv_sNpzsq5-X5yqALV-SJx1K4Jqpz21_BstHwB8Zy8QyvrcratUtZgtbOeOmwdTsCn9MlCe9ppo7M4jplyMA-WeqGXIKQInXcPN4Kk1LjYYEEMzAzFssYJAmK4X6tVlElIlw1cAFssQM5ULjPdXSbL_zAnNEAzIDw6JDMSkOhSw4eKxxCtAwrmrlR3DuZ1fyIYKMhGop3oLo6mJMQ6_bA_3rdBFZc5ATJQEs4tkyndfWJ0deQiN9rVvZScD5rtEcDcRGt4AN-qM96pCKeVjPQBPbDegsY7ZrGF1cTNSqXVvxvm8Tn3JANprjk6qZdfki_d_srsz-CA1sw', 'Content-Length': '228', 'Content-Type': 'application/json'} 
+ body=b'{"identityId": "prof-identity-1774794607", "name": "Professor Teste 1774794607", "email": "professor1774794607@nexora.com", "role": "teacher", "status": "active", "description": "Professor de APIs", "subject": "Matem\\u00e1tica"}' 
+ </msg>
+<msg time="2026-03-29T11:30:07.845087" level="INFO">POST Response : url=http://localhost:3000/api/v1/users 
+ status=201, reason=Created 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'x-correlation-id': 'ec7c27b7-74a9-49e6-899b-13404c58d879', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '375', 'ETag': 'W/"177-CLSyez2sZkU5iAdO8mloTX7m7Fg"', 'Date': 'Sun, 29 Mar 2026 14:30:07 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"data":{"id":"69c9376f65a5229cddca1c64","identityId":"prof-identity-1774794607","name":"Professor Teste 1774794607","email":"professor1774794607@nexora.com","role":"teacher","status":"active","createdAt":"2026-03-29T14:30:07.843Z","updatedAt":"2026-03-29T14:30:07.843Z"},"meta":{"correlationId":"ec7c27b7-74a9-49e6-899b-13404c58d879","timestamp":"2026-03-29T14:30:07.844Z"}} 
+ </msg>
+<msg time="2026-03-29T11:30:07.845147" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>admin</arg>
+<arg>${API_PREFIX}/users</arg>
+<arg>headers=${headers}</arg>
+<arg>json=${body}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.839333" elapsed="0.005827"/>
+</kw>
+<kw name="Status Should Be" owner="RequestsLibrary">
+<arg>201</arg>
+<arg>${response}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.845231" elapsed="0.000091"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.845707" level="INFO">${json} = {'data': {'id': '69c9376f65a5229cddca1c64', 'identityId': 'prof-identity-1774794607', 'name': 'Professor Teste 1774794607', 'email': 'professor1774794607@nexora.com', 'role': 'teacher', 'status': 'act...</msg>
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.845368" elapsed="0.000352"/>
+</kw>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Dictionary Should Contain Key">
+<msg time="2026-03-29T11:30:07.846378" level="FAIL">No keyword with name 'Dictionary Should Contain Key' found.</msg>
+<arg>${json}</arg>
+<arg>data</arg>
+<status status="FAIL" start="2026-03-29T11:30:07.846361" elapsed="0.000035">No keyword with name 'Dictionary Should Contain Key' found.</status>
+</kw>
+<msg time="2026-03-29T11:30:07.846441" level="INFO">${has_data} = False</msg>
+<var>${has_data}</var>
+<arg>Dictionary Should Contain Key</arg>
+<arg>${json}</arg>
+<arg>data</arg>
+<doc>Runs the specified keyword and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.845780" elapsed="0.000670"/>
+</kw>
+<if>
+<branch type="IF" condition="${has_data}">
+<kw name="Set Variable" owner="BuiltIn">
+<var>${user}</var>
+<arg>${json['data']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" start="2026-03-29T11:30:07.846571" elapsed="0.000009"/>
+</kw>
+<status status="NOT RUN" start="2026-03-29T11:30:07.846506" elapsed="0.000089"/>
+</branch>
+<branch type="ELSE">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.846762" level="INFO">${user} = {'data': {'id': '69c9376f65a5229cddca1c64', 'identityId': 'prof-identity-1774794607', 'name': 'Professor Teste 1774794607', 'email': 'professor1774794607@nexora.com', 'role': 'teacher', 'status': 'act...</msg>
+<var>${user}</var>
+<arg>${json}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.846644" elapsed="0.000130"/>
+</kw>
+<status status="PASS" start="2026-03-29T11:30:07.846608" elapsed="0.000182"/>
+</branch>
+<status status="PASS" start="2026-03-29T11:30:07.846490" elapsed="0.000311"/>
+</if>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Dictionary Should Contain Key">
+<msg time="2026-03-29T11:30:07.847310" level="FAIL">No keyword with name 'Dictionary Should Contain Key' found.</msg>
+<arg>${user}</arg>
+<arg>id</arg>
+<status status="FAIL" start="2026-03-29T11:30:07.847298" elapsed="0.000029">No keyword with name 'Dictionary Should Contain Key' found.</status>
+</kw>
+<arg>Dictionary Should Contain Key</arg>
+<arg>${user}</arg>
+<arg>id</arg>
+<doc>Runs the specified keyword and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.846839" elapsed="0.000514"/>
+</kw>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Dictionary Should Contain Key">
+<msg time="2026-03-29T11:30:07.847846" level="FAIL">No keyword with name 'Dictionary Should Contain Key' found.</msg>
+<arg>${user}</arg>
+<arg>_id</arg>
+<status status="FAIL" start="2026-03-29T11:30:07.847836" elapsed="0.000024">No keyword with name 'Dictionary Should Contain Key' found.</status>
+</kw>
+<arg>Dictionary Should Contain Key</arg>
+<arg>${user}</arg>
+<arg>_id</arg>
+<doc>Runs the specified keyword and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.847393" elapsed="0.000490"/>
+</kw>
+<tag>admin</tag>
+<tag>create</tag>
+<tag>teacher</tag>
+<tag>users</tag>
+<status status="PASS" start="2026-03-29T11:30:07.802093" elapsed="0.045842"/>
+</test>
+<doc>Teste E2E para criação de professor via API Nexora Academy</doc>
+<status status="PASS" start="2026-03-29T11:30:07.801332" elapsed="0.046764"/>
+</suite>
+<suite id="s1-s7" name="Users" source="/Users/cliente/Documents/xpe/nexora-academy-api/tests/robot/users.robot">
+<test id="s1-s7-t1" name="Admin Login Should Return Token" line="22">
+<kw name="Get Token" owner="keywords">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.849733" level="INFO">${keycloak_url} = http://localhost:8080/realms/nexora/protocol/openid-connect/token</msg>
+<var>${keycloak_url}</var>
+<arg>http://localhost:8080/realms/nexora/protocol/openid-connect/token</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.849613" elapsed="0.000145"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.849911" level="INFO">${client_id} = nexora-api</msg>
+<var>${client_id}</var>
+<arg>nexora-api</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.849806" elapsed="0.000116"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.850059" level="INFO">${client_secret} = </msg>
+<var>${client_secret}</var>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.849965" elapsed="0.000106"/>
+</kw>
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2026-03-29T11:30:07.850205" level="INFO">Creating Session using : alias=keycloak, url=http://localhost:8080, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>keycloak</arg>
+<arg>http://localhost:8080</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2026-03-29T11:30:07.850113" elapsed="0.000162"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.850469" level="INFO">${data} = grant_type=password&amp;client_id=nexora-api&amp;username=admin@nexora.com&amp;password=admin123</msg>
+<var>${data}</var>
+<arg>grant_type=password&amp;client_id=${client_id}&amp;username=${username}&amp;password=${password}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.850319" elapsed="0.000163"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.850684" level="INFO">${headers} = {'Content-Type': 'application/x-www-form-urlencoded'}</msg>
+<var>${headers}</var>
+<arg>Content-Type=application/x-www-form-urlencoded</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.850529" elapsed="0.000221"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-03-29T11:30:07.884076" level="INFO">POST Request : url=http://localhost:8080/realms/nexora/protocol/openid-connect/token 
+ path_url=/realms/nexora/protocol/openid-connect/token 
+ headers={'User-Agent': 'python-requests/2.33.0', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/x-www-form-urlencoded', 'Content-Length': '84'} 
+ body=grant_type=password&amp;client_id=nexora-api&amp;username=admin@nexora.com&amp;password=admin123 
+ </msg>
+<msg time="2026-03-29T11:30:07.884136" level="INFO">POST Response : url=http://localhost:8080/realms/nexora/protocol/openid-connect/token 
+ status=200, reason=OK 
+ headers={'Cache-Control': 'no-store', 'Pragma': 'no-cache', 'content-length': '1869', 'Content-Type': 'application/json', 'Referrer-Policy': 'no-referrer', 'Strict-Transport-Security': 'max-age=31536000; includeSubDomains', 'X-Content-Type-Options': 'nosniff', 'X-Frame-Options': 'SAMEORIGIN', 'X-XSS-Protection': '1; mode=block'} 
+ body={"access_token":"eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWUnRFY2lDLTJvRnZXZnU1cG9SbU1OVzdrWnpaS0VVNGNTSU83SlZxZlR3In0.eyJleHAiOjE3NzQ3OTgyMDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiZTY5NGJjZjctZjRmOS00NjVhLWE3NzctMzFkM2NjZGY5YzJiIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9uZXhvcmEiLCJhdWQiOiJuZXhvcmEtYXBpIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoibmV4b3JhLWFwaSIsInNpZCI6ImRkNTI5ZTc2LTI3ZWMtNGVmNC1hOTFjLTRiMjE4M2FlZmU5YyIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiYWRtaW4iXX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoiQWRtaW4gTmV4b3JhIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYWRtaW5AbmV4b3JhLmNvbSIsImdpdmVuX25hbWUiOiJBZG1pbiIsImZhbWlseV9uYW1lIjoiTmV4b3JhIiwiZW1haWwiOiJhZG1pbkBuZXhvcmEuY29tIn0.oQCJ8HZsYg2ZJZJ7SZ0BgJhaO2d8kw1ls_YeIi-8Q9lfU18QTmMYrIIe7yhK-DdYmWq3ycvpY2eHdyFo9AZhQ_uMI_FBQFYKifDfFGfQ1lxcsCU5yACStBM_Gkbw3ha5E6pb4ChFfjgTCSmOkPfZFRcu_1WlZcFDBczK6rdahDFPHdbb2-15s6jX0hgtIdC0hpwQqsnCNL8ePqpFqAR-MB8T3rmUWyPjXFPeSRZa0qOt7NDS5M7dHWbJ1kAo6uZSwpUmtvL9rSd-pygTBeN9M2xZQpuhcdHhvK4nrbc4jW7lzlnO8o2O8cM5O0_ZkMyXzmVXxpoS0Z1pMINZQ6Nz2g","expires_in":3600,"refresh_expires_in":1800,"refresh_token":"eyJhbGciOiJIUzUxMiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJjYmRlNzhhOC1mMTkwLTRkZjEtOGYxNC05YWUyOGM0NzI1NzIifQ.eyJleHAiOjE3NzQ3OTY0MDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiYzc0ZDkwYjYtY2IyNy00NmMzLWEwZWUtMDYxNzdhYTc1NjhmIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9uZXhvcmEiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvcmVhbG1zL25leG9yYSIsInR5cCI6IlJlZnJlc2giLCJhenAiOiJuZXhvcmEtYXBpIiwic2lkIjoiZGQ1MjllNzYtMjdlYy00ZWY0LWE5MWMtNGIyMTgzYWVmZTljIiwic2NvcGUiOiJ3ZWItb3JpZ2lucyBhY3IgZW1haWwgcHJvZmlsZSByb2xlcyJ9.6Hf_YwAdPO0apD0N0JGm06NhLIZLHcCgu9uD9MOHQJfZyyaVk9K3KKh_UCjRr8uCmZY2ZIzFD76rLZwu49RHjA","token_type":"Bearer","not-before-policy":0,"session_state":"dd529e76-27ec-4ef4-a91c-4b2183aefe9c","scope":"email profile"} 
+ </msg>
+<msg time="2026-03-29T11:30:07.884212" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>keycloak</arg>
+<arg>/realms/nexora/protocol/openid-connect/token</arg>
+<arg>data=${data}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.850920" elapsed="0.033303"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.884728" level="INFO">${json} = {'access_token': 'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWUnRFY2lDLTJvRnZXZnU1cG9SbU1OVzdrWnpaS0VVNGNTSU83SlZxZlR3In0.eyJleHAiOjE3NzQ3OTgyMDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiZTY5NGJjZjctZj...</msg>
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.884309" elapsed="0.000433"/>
+</kw>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${json}</arg>
+<arg>access_token</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.884790" elapsed="0.000137"/>
+</kw>
+<return>
+<value>${json}[access_token]</value>
+<status status="PASS" start="2026-03-29T11:30:07.884953" elapsed="0.000019"/>
+</return>
+<msg time="2026-03-29T11:30:07.885035" level="INFO">${token} = eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWUnRFY2lDLTJvRnZXZnU1cG9SbU1OVzdrWnpaS0VVNGNTSU83SlZxZlR3In0.eyJleHAiOjE3NzQ3OTgyMDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiZTY5NGJjZjctZjRmOS00NjVhLWE3Nzct...</msg>
+<var>${token}</var>
+<arg>${ADMIN_USER}</arg>
+<arg>${ADMIN_PASS}</arg>
+<status status="PASS" start="2026-03-29T11:30:07.849465" elapsed="0.035580"/>
+</kw>
+<kw name="Should Not Be Empty" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.885194" level="INFO">Length is 1082.</msg>
+<arg>${token}</arg>
+<doc>Verifies that the given item is not empty.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.885087" elapsed="0.000126"/>
+</kw>
+<tag>admin</tag>
+<tag>login</tag>
+<status status="PASS" start="2026-03-29T11:30:07.849251" elapsed="0.036007"/>
+</test>
+<test id="s1-s7-t2" name="Admin Should List Users" line="28">
+<kw name="Get Token" owner="keywords">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.885776" level="INFO">${keycloak_url} = http://localhost:8080/realms/nexora/protocol/openid-connect/token</msg>
+<var>${keycloak_url}</var>
+<arg>http://localhost:8080/realms/nexora/protocol/openid-connect/token</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.885677" elapsed="0.000110"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.885916" level="INFO">${client_id} = nexora-api</msg>
+<var>${client_id}</var>
+<arg>nexora-api</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.885825" elapsed="0.000101"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.886058" level="INFO">${client_secret} = </msg>
+<var>${client_secret}</var>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.885972" elapsed="0.000096"/>
+</kw>
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2026-03-29T11:30:07.886148" level="INFO">Creating Session using : alias=keycloak, url=http://localhost:8080, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>keycloak</arg>
+<arg>http://localhost:8080</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2026-03-29T11:30:07.886106" elapsed="0.000105"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.886381" level="INFO">${data} = grant_type=password&amp;client_id=nexora-api&amp;username=admin@nexora.com&amp;password=admin123</msg>
+<var>${data}</var>
+<arg>grant_type=password&amp;client_id=${client_id}&amp;username=${username}&amp;password=${password}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.886249" elapsed="0.000143"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.886674" level="INFO">${headers} = {'Content-Type': 'application/x-www-form-urlencoded'}</msg>
+<var>${headers}</var>
+<arg>Content-Type=application/x-www-form-urlencoded</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.886436" elapsed="0.000271"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-03-29T11:30:07.918104" level="INFO">POST Request : url=http://localhost:8080/realms/nexora/protocol/openid-connect/token 
+ path_url=/realms/nexora/protocol/openid-connect/token 
+ headers={'User-Agent': 'python-requests/2.33.0', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/x-www-form-urlencoded', 'Content-Length': '84'} 
+ body=grant_type=password&amp;client_id=nexora-api&amp;username=admin@nexora.com&amp;password=admin123 
+ </msg>
+<msg time="2026-03-29T11:30:07.918159" level="INFO">POST Response : url=http://localhost:8080/realms/nexora/protocol/openid-connect/token 
+ status=200, reason=OK 
+ headers={'Cache-Control': 'no-store', 'Pragma': 'no-cache', 'content-length': '1869', 'Content-Type': 'application/json', 'Referrer-Policy': 'no-referrer', 'Strict-Transport-Security': 'max-age=31536000; includeSubDomains', 'X-Content-Type-Options': 'nosniff', 'X-Frame-Options': 'SAMEORIGIN', 'X-XSS-Protection': '1; mode=block'} 
+ body={"access_token":"eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWUnRFY2lDLTJvRnZXZnU1cG9SbU1OVzdrWnpaS0VVNGNTSU83SlZxZlR3In0.eyJleHAiOjE3NzQ3OTgyMDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiZGRjZDU3YWItMTM5ZS00Yzc1LTlmMWQtZTU1ZmM4NjIxNjExIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9uZXhvcmEiLCJhdWQiOiJuZXhvcmEtYXBpIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoibmV4b3JhLWFwaSIsInNpZCI6IjM2Y2NkZjIxLTZlMmItNGQzMi1hY2IwLWI3MWQ4OGIyNGMwMiIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiYWRtaW4iXX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoiQWRtaW4gTmV4b3JhIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYWRtaW5AbmV4b3JhLmNvbSIsImdpdmVuX25hbWUiOiJBZG1pbiIsImZhbWlseV9uYW1lIjoiTmV4b3JhIiwiZW1haWwiOiJhZG1pbkBuZXhvcmEuY29tIn0.ENhMDXMvlsyb4Waj_5HlO1qT9jfrP_eUh1otoOTjwwv-WujaR_lxCGtFpOQG84Idi75S-E9gc7pIkCwAU7m5agusvk4r4xtPP-jKZrFPVcpcm0zrIczSkK1znl5H-mJ86YcZfPrTVgqrSdC_RH0Z2wzrYwCeP3oEFeGTtwMIQVZUiqksLS_cjAVUzbz4Wq5J91gIddClhTXkucT9umNJlMqCl75V1mvg-y1JTCGDKvgMBGjrQXo9gMxwLmJakpIqBjtkY2-xrfKjCDn1YwE9sHRaJW-vImpSMxb1qrO-lO-nWqKIGr3oP8JPGCV7Y4LnB21gyRXx45SkS9uuzcL0gw","expires_in":3600,"refresh_expires_in":1800,"refresh_token":"eyJhbGciOiJIUzUxMiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJjYmRlNzhhOC1mMTkwLTRkZjEtOGYxNC05YWUyOGM0NzI1NzIifQ.eyJleHAiOjE3NzQ3OTY0MDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiZTAyMmZhZTQtMDUwMC00MDg5LTllNTQtNGQzNmRjODk0NTk0IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9uZXhvcmEiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvcmVhbG1zL25leG9yYSIsInR5cCI6IlJlZnJlc2giLCJhenAiOiJuZXhvcmEtYXBpIiwic2lkIjoiMzZjY2RmMjEtNmUyYi00ZDMyLWFjYjAtYjcxZDg4YjI0YzAyIiwic2NvcGUiOiJ3ZWItb3JpZ2lucyBhY3IgZW1haWwgcHJvZmlsZSByb2xlcyJ9.lRTNU8WSbN7rphhdf371fFrI8OE3M3hgbFdCm5ryedOhtXwJChLWf464JEUjv-lmaFj_bT5ptrkcbX0sfXmSdA","token_type":"Bearer","not-before-policy":0,"session_state":"36ccdf21-6e2b-4d32-acb0-b71d88b24c02","scope":"email profile"} 
+ </msg>
+<msg time="2026-03-29T11:30:07.918244" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>keycloak</arg>
+<arg>/realms/nexora/protocol/openid-connect/token</arg>
+<arg>data=${data}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.886787" elapsed="0.031470"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.918789" level="INFO">${json} = {'access_token': 'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWUnRFY2lDLTJvRnZXZnU1cG9SbU1OVzdrWnpaS0VVNGNTSU83SlZxZlR3In0.eyJleHAiOjE3NzQ3OTgyMDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiZGRjZDU3YWItMT...</msg>
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.918351" elapsed="0.000454"/>
+</kw>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${json}</arg>
+<arg>access_token</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.918853" elapsed="0.000141"/>
+</kw>
+<return>
+<value>${json}[access_token]</value>
+<status status="PASS" start="2026-03-29T11:30:07.919020" elapsed="0.000023"/>
+</return>
+<msg time="2026-03-29T11:30:07.919108" level="INFO">${token} = eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWUnRFY2lDLTJvRnZXZnU1cG9SbU1OVzdrWnpaS0VVNGNTSU83SlZxZlR3In0.eyJleHAiOjE3NzQ3OTgyMDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiZGRjZDU3YWItMTM5ZS00Yzc1LTlmMWQt...</msg>
+<var>${token}</var>
+<arg>${ADMIN_USER}</arg>
+<arg>${ADMIN_PASS}</arg>
+<status status="PASS" start="2026-03-29T11:30:07.885554" elapsed="0.033565"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.919329" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWUnRFY2lDLTJvRnZXZnU1cG9SbU1OVzdrWnpaS0VVNGNTSU83SlZxZlR3In0.eyJleHAiOjE3NzQ3OTgyMDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiZGRjZD...</msg>
+<var>${headers}</var>
+<arg>Authorization=Bearer ${token}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.919172" elapsed="0.000169"/>
+</kw>
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2026-03-29T11:30:07.919438" level="INFO">Creating Session using : alias=admin, url=http://localhost:3000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>admin</arg>
+<arg>${BASE_URL}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2026-03-29T11:30:07.919384" elapsed="0.000120"/>
+</kw>
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-03-29T11:30:07.924387" level="INFO">GET Request : url=http://localhost:3000/api/v1/users 
+ path_url=/api/v1/users 
+ headers={'User-Agent': 'python-requests/2.33.0', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWUnRFY2lDLTJvRnZXZnU1cG9SbU1OVzdrWnpaS0VVNGNTSU83SlZxZlR3In0.eyJleHAiOjE3NzQ3OTgyMDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiZGRjZDU3YWItMTM5ZS00Yzc1LTlmMWQtZTU1ZmM4NjIxNjExIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9uZXhvcmEiLCJhdWQiOiJuZXhvcmEtYXBpIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoibmV4b3JhLWFwaSIsInNpZCI6IjM2Y2NkZjIxLTZlMmItNGQzMi1hY2IwLWI3MWQ4OGIyNGMwMiIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiYWRtaW4iXX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoiQWRtaW4gTmV4b3JhIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiYWRtaW5AbmV4b3JhLmNvbSIsImdpdmVuX25hbWUiOiJBZG1pbiIsImZhbWlseV9uYW1lIjoiTmV4b3JhIiwiZW1haWwiOiJhZG1pbkBuZXhvcmEuY29tIn0.ENhMDXMvlsyb4Waj_5HlO1qT9jfrP_eUh1otoOTjwwv-WujaR_lxCGtFpOQG84Idi75S-E9gc7pIkCwAU7m5agusvk4r4xtPP-jKZrFPVcpcm0zrIczSkK1znl5H-mJ86YcZfPrTVgqrSdC_RH0Z2wzrYwCeP3oEFeGTtwMIQVZUiqksLS_cjAVUzbz4Wq5J91gIddClhTXkucT9umNJlMqCl75V1mvg-y1JTCGDKvgMBGjrQXo9gMxwLmJakpIqBjtkY2-xrfKjCDn1YwE9sHRaJW-vImpSMxb1qrO-lO-nWqKIGr3oP8JPGCV7Y4LnB21gyRXx45SkS9uuzcL0gw'} 
+ body=None 
+ </msg>
+<msg time="2026-03-29T11:30:07.924453" level="INFO">GET Response : url=http://localhost:3000/api/v1/users 
+ status=200, reason=OK 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'x-correlation-id': '6f4234af-a048-4e08-bbc6-7e901ebdb0b0', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '114', 'ETag': 'W/"72-2rFpORlE5RQAcg6XocdBMBveWYM"', 'Date': 'Sun, 29 Mar 2026 14:30:07 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"data":[],"meta":{"correlationId":"6f4234af-a048-4e08-bbc6-7e901ebdb0b0","timestamp":"2026-03-29T14:30:07.923Z"}} 
+ </msg>
+<msg time="2026-03-29T11:30:07.924522" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>admin</arg>
+<arg>${API_PREFIX}/users</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.919552" elapsed="0.004983"/>
+</kw>
+<kw name="Status Should Be" owner="RequestsLibrary">
+<arg>200</arg>
+<arg>${response}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.924619" elapsed="0.000110"/>
+</kw>
+<tag>admin</tag>
+<tag>users</tag>
+<status status="PASS" start="2026-03-29T11:30:07.885365" elapsed="0.039417"/>
+</test>
+<test id="s1-s7-t3" name="Support Should List Users" line="37">
+<kw name="Get Token" owner="keywords">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.925380" level="INFO">${keycloak_url} = http://localhost:8080/realms/nexora/protocol/openid-connect/token</msg>
+<var>${keycloak_url}</var>
+<arg>http://localhost:8080/realms/nexora/protocol/openid-connect/token</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.925248" elapsed="0.000144"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.925533" level="INFO">${client_id} = nexora-api</msg>
+<var>${client_id}</var>
+<arg>nexora-api</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.925436" elapsed="0.000109"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.925677" level="INFO">${client_secret} = </msg>
+<var>${client_secret}</var>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.925584" elapsed="0.000103"/>
+</kw>
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2026-03-29T11:30:07.925764" level="INFO">Creating Session using : alias=keycloak, url=http://localhost:8080, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>keycloak</arg>
+<arg>http://localhost:8080</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2026-03-29T11:30:07.925726" elapsed="0.000099"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.926013" level="INFO">${data} = grant_type=password&amp;client_id=nexora-api&amp;username=support@nexora.com&amp;password=support123</msg>
+<var>${data}</var>
+<arg>grant_type=password&amp;client_id=${client_id}&amp;username=${username}&amp;password=${password}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.925877" elapsed="0.000147"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.926185" level="INFO">${headers} = {'Content-Type': 'application/x-www-form-urlencoded'}</msg>
+<var>${headers}</var>
+<arg>Content-Type=application/x-www-form-urlencoded</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.926068" elapsed="0.000127"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-03-29T11:30:07.959668" level="INFO">POST Request : url=http://localhost:8080/realms/nexora/protocol/openid-connect/token 
+ path_url=/realms/nexora/protocol/openid-connect/token 
+ headers={'User-Agent': 'python-requests/2.33.0', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/x-www-form-urlencoded', 'Content-Length': '88'} 
+ body=grant_type=password&amp;client_id=nexora-api&amp;username=support@nexora.com&amp;password=support123 
+ </msg>
+<msg time="2026-03-29T11:30:07.959725" level="INFO">POST Response : url=http://localhost:8080/realms/nexora/protocol/openid-connect/token 
+ status=200, reason=OK 
+ headers={'Cache-Control': 'no-store', 'Pragma': 'no-cache', 'content-length': '1882', 'Content-Type': 'application/json', 'Referrer-Policy': 'no-referrer', 'Strict-Transport-Security': 'max-age=31536000; includeSubDomains', 'X-Content-Type-Options': 'nosniff', 'X-Frame-Options': 'SAMEORIGIN', 'X-XSS-Protection': '1; mode=block'} 
+ body={"access_token":"eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWUnRFY2lDLTJvRnZXZnU1cG9SbU1OVzdrWnpaS0VVNGNTSU83SlZxZlR3In0.eyJleHAiOjE3NzQ3OTgyMDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiMWJiOWEyNzYtMmQ1Zi00MDY0LWIzNWQtOGJlNWE0OGI1NTU3IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9uZXhvcmEiLCJhdWQiOiJuZXhvcmEtYXBpIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoibmV4b3JhLWFwaSIsInNpZCI6ImYzMDQzOTY1LTcyOGUtNDJjOC05ZTUxLWI0NjJiZTNkZTM3NCIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsic3VwcG9ydCJdfSwic2NvcGUiOiJlbWFpbCBwcm9maWxlIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5hbWUiOiJTdXBvcnRlIE5leG9yYSIsInByZWZlcnJlZF91c2VybmFtZSI6InN1cHBvcnRAbmV4b3JhLmNvbSIsImdpdmVuX25hbWUiOiJTdXBvcnRlIiwiZmFtaWx5X25hbWUiOiJOZXhvcmEiLCJlbWFpbCI6InN1cHBvcnRAbmV4b3JhLmNvbSJ9.MH_L3F5k821PoDUwpuD7tE-GVEesYODeUStGEgsjsVfynwtXFtJcy4PhIjn4_vjzO83hzR3X-QOsnOVb_VF7PU8ZftAnzZfwu7gdNKkB7BFtxCDC-ef_W76cY9ifScoOkwJyvil2BoqhrvEAsvukF_O5YrtVGW-PedqYs3_qTJZyiB5pBhXMuOntzy9eyqhdR2AAFD7c1Yl7CTHBhBYBGQ4SZGatao6sMc_gCVvjgkj4H4Wj7ZOPViothdTubgtfUH0sXhCXPC0so9aTwE77jjtWFjfw_jq0SaisoiWVzZEHdrmiG8Mye0aUEitPc9plMriAKVgILlNYa0FbgfGsww","expires_in":3600,"refresh_expires_in":1800,"refresh_token":"eyJhbGciOiJIUzUxMiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJjYmRlNzhhOC1mMTkwLTRkZjEtOGYxNC05YWUyOGM0NzI1NzIifQ.eyJleHAiOjE3NzQ3OTY0MDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiYzU1YjdlODQtZTQ4My00MWU5LWJjOTQtMDkzMDcyMjljYzc1IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9uZXhvcmEiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvcmVhbG1zL25leG9yYSIsInR5cCI6IlJlZnJlc2giLCJhenAiOiJuZXhvcmEtYXBpIiwic2lkIjoiZjMwNDM5NjUtNzI4ZS00MmM4LTllNTEtYjQ2MmJlM2RlMzc0Iiwic2NvcGUiOiJ3ZWItb3JpZ2lucyBhY3IgZW1haWwgcHJvZmlsZSByb2xlcyJ9.uRUlPYrVsVCPEYIatpMr1VycE_vydTdIYV0h3k-2tpslSXfz45DvVIALL1HGfRM3LQpRy0KKOYstZvLzzyZQ0g","token_type":"Bearer","not-before-policy":0,"session_state":"f3043965-728e-42c8-9e51-b462be3de374","scope":"email profile"} 
+ </msg>
+<msg time="2026-03-29T11:30:07.959803" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>keycloak</arg>
+<arg>/realms/nexora/protocol/openid-connect/token</arg>
+<arg>data=${data}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.926234" elapsed="0.033581"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.960292" level="INFO">${json} = {'access_token': 'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWUnRFY2lDLTJvRnZXZnU1cG9SbU1OVzdrWnpaS0VVNGNTSU83SlZxZlR3In0.eyJleHAiOjE3NzQ3OTgyMDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiMWJiOWEyNzYtMm...</msg>
+<var>${json}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.959899" elapsed="0.000406"/>
+</kw>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${json}</arg>
+<arg>access_token</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.960349" elapsed="0.000138"/>
+</kw>
+<return>
+<value>${json}[access_token]</value>
+<status status="PASS" start="2026-03-29T11:30:07.960513" elapsed="0.000020"/>
+</return>
+<msg time="2026-03-29T11:30:07.960660" level="INFO">${token} = eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWUnRFY2lDLTJvRnZXZnU1cG9SbU1OVzdrWnpaS0VVNGNTSU83SlZxZlR3In0.eyJleHAiOjE3NzQ3OTgyMDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiMWJiOWEyNzYtMmQ1Zi00MDY0LWIzNWQt...</msg>
+<var>${token}</var>
+<arg>${SUPPORT_USER}</arg>
+<arg>${SUPPORT_PASS}</arg>
+<status status="PASS" start="2026-03-29T11:30:07.925116" elapsed="0.035555"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-03-29T11:30:07.960880" level="INFO">${headers} = {'Authorization': 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWUnRFY2lDLTJvRnZXZnU1cG9SbU1OVzdrWnpaS0VVNGNTSU83SlZxZlR3In0.eyJleHAiOjE3NzQ3OTgyMDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiMWJiOW...</msg>
+<var>${headers}</var>
+<arg>Authorization=Bearer ${token}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.960724" elapsed="0.000169"/>
+</kw>
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2026-03-29T11:30:07.960984" level="INFO">Creating Session using : alias=support, url=http://localhost:3000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>support</arg>
+<arg>${BASE_URL}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2026-03-29T11:30:07.960933" elapsed="0.000115"/>
+</kw>
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-03-29T11:30:07.965215" level="INFO">GET Request : url=http://localhost:3000/api/v1/users 
+ path_url=/api/v1/users 
+ headers={'User-Agent': 'python-requests/2.33.0', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWUnRFY2lDLTJvRnZXZnU1cG9SbU1OVzdrWnpaS0VVNGNTSU83SlZxZlR3In0.eyJleHAiOjE3NzQ3OTgyMDcsImlhdCI6MTc3NDc5NDYwNywianRpIjoiMWJiOWEyNzYtMmQ1Zi00MDY0LWIzNWQtOGJlNWE0OGI1NTU3IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9uZXhvcmEiLCJhdWQiOiJuZXhvcmEtYXBpIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoibmV4b3JhLWFwaSIsInNpZCI6ImYzMDQzOTY1LTcyOGUtNDJjOC05ZTUxLWI0NjJiZTNkZTM3NCIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsic3VwcG9ydCJdfSwic2NvcGUiOiJlbWFpbCBwcm9maWxlIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5hbWUiOiJTdXBvcnRlIE5leG9yYSIsInByZWZlcnJlZF91c2VybmFtZSI6InN1cHBvcnRAbmV4b3JhLmNvbSIsImdpdmVuX25hbWUiOiJTdXBvcnRlIiwiZmFtaWx5X25hbWUiOiJOZXhvcmEiLCJlbWFpbCI6InN1cHBvcnRAbmV4b3JhLmNvbSJ9.MH_L3F5k821PoDUwpuD7tE-GVEesYODeUStGEgsjsVfynwtXFtJcy4PhIjn4_vjzO83hzR3X-QOsnOVb_VF7PU8ZftAnzZfwu7gdNKkB7BFtxCDC-ef_W76cY9ifScoOkwJyvil2BoqhrvEAsvukF_O5YrtVGW-PedqYs3_qTJZyiB5pBhXMuOntzy9eyqhdR2AAFD7c1Yl7CTHBhBYBGQ4SZGatao6sMc_gCVvjgkj4H4Wj7ZOPViothdTubgtfUH0sXhCXPC0so9aTwE77jjtWFjfw_jq0SaisoiWVzZEHdrmiG8Mye0aUEitPc9plMriAKVgILlNYa0FbgfGsww'} 
+ body=None 
+ </msg>
+<msg time="2026-03-29T11:30:07.965263" level="INFO">GET Response : url=http://localhost:3000/api/v1/users 
+ status=200, reason=OK 
+ headers={'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'x-correlation-id': 'f1e0f90a-2647-4638-98ab-0eb098de655c', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '114', 'ETag': 'W/"72-YAnGtUEqXEnYLqiGMyGFnPGXSio"', 'Date': 'Sun, 29 Mar 2026 14:30:07 GMT', 'Connection': 'keep-alive', 'Keep-Alive': 'timeout=5'} 
+ body={"data":[],"meta":{"correlationId":"f1e0f90a-2647-4638-98ab-0eb098de655c","timestamp":"2026-03-29T14:30:07.964Z"}} 
+ </msg>
+<msg time="2026-03-29T11:30:07.965323" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>support</arg>
+<arg>${API_PREFIX}/users</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.961088" elapsed="0.004247"/>
+</kw>
+<kw name="Status Should Be" owner="RequestsLibrary">
+<arg>200</arg>
+<arg>${response}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" start="2026-03-29T11:30:07.965406" elapsed="0.000095"/>
+</kw>
+<tag>support</tag>
+<tag>users</tag>
+<status status="PASS" start="2026-03-29T11:30:07.924904" elapsed="0.040650"/>
+</test>
+<doc>Testes E2E para API Nexora Academy - Usuários</doc>
+<status status="PASS" start="2026-03-29T11:30:07.848304" elapsed="0.117406"/>
+</suite>
+<status status="PASS" start="2026-03-29T11:30:07.262939" elapsed="0.703013"/>
+</suite>
+<statistics>
+<total>
+<stat pass="13" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="8" fail="0" skip="0">admin</stat>
+<stat pass="2" fail="0" skip="0">classrooms</stat>
+<stat pass="2" fail="0" skip="0">courses</stat>
+<stat pass="3" fail="0" skip="0">create</stat>
+<stat pass="2" fail="0" skip="0">enrollments</stat>
+<stat pass="1" fail="0" skip="0">login</stat>
+<stat pass="2" fail="0" skip="0">public</stat>
+<stat pass="2" fail="0" skip="0">support</stat>
+<stat pass="2" fail="0" skip="0">teacher</stat>
+<stat pass="5" fail="0" skip="0">users</stat>
+</tag>
+<suite>
+<stat name="Robot" id="s1" pass="13" fail="0" skip="0">Robot</stat>
+<stat name="Classrooms" id="s1-s1" pass="2" fail="0" skip="0">Robot.Classrooms</stat>
+<stat name="Courses" id="s1-s2" pass="2" fail="0" skip="0">Robot.Courses</stat>
+<stat name="Create User" id="s1-s3" pass="2" fail="0" skip="0">Robot.Create User</stat>
+<stat name="Enrollments" id="s1-s4" pass="2" fail="0" skip="0">Robot.Enrollments</stat>
+<stat name="Health" id="s1-s5" pass="1" fail="0" skip="0">Robot.Health</stat>
+<stat name="Teacher" id="s1-s6" pass="1" fail="0" skip="0">Robot.Teacher</stat>
+<stat name="Users" id="s1-s7" pass="3" fail="0" skip="0">Robot.Users</stat>
+</suite>
+</statistics>
+<errors>
+<msg time="2026-03-29T11:30:07.254138" level="WARN">Error in file '/Users/cliente/Documents/xpe/nexora-academy-api/tests/robot/keywords.robot' on line 16: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
+<msg time="2026-03-29T11:30:07.359914" level="WARN">Error in file '/Users/cliente/Documents/xpe/nexora-academy-api/tests/robot/keywords.robot' on line 16: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
+</errors>
+</robot>
