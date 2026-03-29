@@ -1,0 +1,104 @@
+{
+  "id": "nexora",
+  "realm": "nexora",
+  "displayName": "Nexora Academy",
+  "enabled": true,
+  "sslRequired": "external",
+  "registrationAllowed": false,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": true,
+  "editUsernameAllowed": false,
+  "accessTokenLifespan": 3600,
+  "roles": {
+    "realm": [
+      { "name": "admin",   "description": "Administrador da plataforma" },
+      { "name": "support", "description": "Suporte ao aluno" },
+      { "name": "teacher", "description": "Professor" },
+      { "name": "student", "description": "Aluno" }
+    ]
+  },
+  "clients": [
+    {
+      "clientId": "nexora-api",
+      "name": "Nexora Academy API",
+      "enabled": true,
+      "publicClient": true,
+      "directAccessGrantsEnabled": true,
+      "standardFlowEnabled": true,
+      "protocol": "openid-connect",
+      "redirectUris": ["*"],
+      "webOrigins": ["*"],
+      "defaultClientScopes": [
+        "web-origins",
+        "acr",
+        "profile",
+        "roles",
+        "email"
+      ],
+      "protocolMappers": [
+        {
+          "name": "audience-nexora-api",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "consentRequired": false,
+          "config": {
+            "included.client.audience": "nexora-api",
+            "id.token.claim": "false",
+            "access.token.claim": "true"
+          }
+        }
+      ]
+    }
+  ],
+  "users": [
+    {
+      "username": "admin@nexora.com",
+      "email": "admin@nexora.com",
+      "firstName": "Admin",
+      "lastName": "Nexora",
+      "enabled": true,
+      "emailVerified": true,
+      "credentials": [
+        { "type": "password", "value": "admin123", "temporary": false }
+      ],
+      "realmRoles": ["admin"]
+    },
+    {
+      "username": "support@nexora.com",
+      "email": "support@nexora.com",
+      "firstName": "Suporte",
+      "lastName": "Nexora",
+      "enabled": true,
+      "emailVerified": true,
+      "credentials": [
+        { "type": "password", "value": "support123", "temporary": false }
+      ],
+      "realmRoles": ["support"]
+    },
+    {
+      "username": "teacher@nexora.com",
+      "email": "teacher@nexora.com",
+      "firstName": "Professor",
+      "lastName": "Nexora",
+      "enabled": true,
+      "emailVerified": true,
+      "credentials": [
+        { "type": "password", "value": "teacher123", "temporary": false }
+      ],
+      "realmRoles": ["teacher"]
+    },
+    {
+      "username": "student@nexora.com",
+      "email": "student@nexora.com",
+      "firstName": "Aluno",
+      "lastName": "Nexora",
+      "enabled": true,
+      "emailVerified": true,
+      "credentials": [
+        { "type": "password", "value": "student123", "temporary": false }
+      ],
+      "realmRoles": ["student"]
+    }
+  ]
+}
