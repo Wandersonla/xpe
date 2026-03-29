@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>C4 Model — Nexora Academy</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+  <style>
+    :root {
+      --bg:       #0d1117;
+      --surface:  #161b22;
+      --border:   #21262d;
+      --text:     #e6edf3;
+      --muted:    #8b949e;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      padding: 2.5rem 3rem;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      text-align: center;
+      margin-bottom: 3rem;
+      padding: 2.5rem;
+      background: linear-gradient(135deg, #0d2137 0%, #1a103a 100%);
+      border: 1px solid #2a3f5f;
+      border-radius: 20px;
+    }
+    .hero h1 {
+      font-size: 2.6rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, #58a6ff, #bc8cff, #79c0ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p { color: var(--muted); margin-top: .5rem; font-size: .95rem; }
+    .chips {
+      display: flex; flex-wrap: wrap; gap: .5rem;
+      justify-content: center; margin-top: 1rem;
+    }
+    .chip {
+      background: #1c2333; border: 1px solid #30363d;
+      border-radius: 999px; padding: .25rem .8rem;
+      font-size: .75rem; color: #58a6ff;
+    }
+
+    /* ── NAV ── */
+    nav {
+      display: flex; gap: .75rem; justify-content: center;
+      flex-wrap: wrap; margin-bottom: 3rem;
+    }
+    nav a {
+      text-decoration: none; padding: .55rem 1.4rem;
+      border-radius: 10px; font-size: .85rem; font-weight: 700;
+      transition: filter .15s;
+    }
+    nav a:hover { filter: brightness(1.15); }
+    .n1 { background:#0d2d6e; color:#79a9f5; border:1px solid #1a4a9e; }
+    .n2 { background:#3b1275; color:#c084fc; border:1px solid #5c2ba0; }
+    .n3 { background:#0a3d2a; color:#4ade80; border:1px solid #166534; }
+    .n4 { background:#5c2a00; color:#fbbf24; border:1px solid #92400e; }
+
+    /* ── SECTION ── */
+    section {
+      margin-bottom: 4.5rem;
+      scroll-margin-top: 1.5rem;
+    }
+
+    .sec-header {
+      display: flex; align-items: flex-start; gap: 1rem;
+      margin-bottom: 1.2rem; padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .badge {
+      font-size: .7rem; font-weight: 800; padding: .35rem .9rem;
+      border-radius: 8px; text-transform: uppercase; letter-spacing: .06em;
+      flex-shrink: 0; margin-top: .15rem;
+    }
+    .b1{background:#0d2d6e;color:#79a9f5;}
+    .b2{background:#3b1275;color:#c084fc;}
+    .b3{background:#0a3d2a;color:#4ade80;}
+    .b4{background:#5c2a00;color:#fbbf24;}
+
+    .sec-title { font-size: 1.35rem; font-weight: 700; }
+    .sec-desc  { font-size: .87rem; color: var(--muted); margin-top: .25rem; line-height: 1.5; }
+
+    /* ── CARD ── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem 1.5rem;
+      overflow-x: auto;
+    }
+    .mermaid { display: flex; justify-content: center; }
+
+    /* ── LEGEND ── */
+    .legend {
+      display: flex; flex-wrap: wrap; gap: 1.2rem;
+      margin-top: 1.2rem; padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+    .leg { display: flex; align-items: center; gap: .45rem; font-size: .78rem; color: var(--muted); }
+    .dot { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center; margin-top: 3rem; padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      color: var(--muted); font-size: .8rem; line-height: 1.8;
+    }
+    footer strong { color: #58a6ff; }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>Nexora Academy</h1>
+  <p>Documentação Arquitetural · C4 Model · v1.0 · Pós-graduação Arquitetura de Software — XP Educação 2026</p>
+  <div class="chips">
+    <span class="chip">NestJS</span><span class="chip">TypeScript</span>
+    <span class="chip">MongoDB</span><span class="chip">Redis</span>
+    <span class="chip">RabbitMQ</span><span class="chip">Keycloak</span>
+    <span class="chip">GKE</span><span class="chip">SigNoz</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#c1" class="n1">C1 · Contexto</a>
+  <a href="#c2" class="n2">C2 · Container</a>
+  <a href="#c3" class="n3">C3 · Componente</a>
+  <a href="#c4" class="n4">C4 · Código</a>
+</nav>
+
+<!-- ══════════════════ C1 ══════════════════ -->
+<section id="c1">
+  <div class="sec-header">
+    <span class="badge b1">Nível 1</span>
+    <div>
+      <div class="sec-title">Contexto de Negócio</div>
+      <div class="sec-desc">Visão macro: quem usa o sistema, onde ele se encaixa e quais sistemas externos interage.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="mermaid">
+flowchart LR
+  classDef person   fill:#0d2d6e,stroke:#1a4a9e,color:#c8deff,font-size:13px
+  classDef system   fill:#0a3d2a,stroke:#166534,color:#bbf7d0,font-size:13px
+  classDef external fill:#2d1b00,stroke:#92400e,color:#fde68a,font-size:13px
+
+  subgraph Usuarios["👥  Usuários"]
+    aluno(["👤 Aluno"]):::person
+    prof(["👤 Professor"]):::person
+    admin(["👤 Administrador"]):::person
+    suporte(["👤 Atendimento"]):::person
+  end
+
+  nexora["🏫 Nexora Academy\nPlataforma de cursos on-line\nMonólito Modular — NestJS"]:::system
+
+  subgraph Externos["🌐  Sistemas Externos"]
+    cf["☁️ Cloudflare\nDNS · WAF · CDN"]:::external
+    kc["🔑 Keycloak\nIAM · OAuth2/OIDC"]:::external
+    obs["📊 SigNoz + OTEL\nObservabilidade"]:::external
+  end
+
+  aluno  -->|"Portal Acadêmico\n(cursos e inscrições)"| nexora
+  prof   -->|"Portal Acadêmico\n(turmas e alunos)"| nexora
+  admin  -->|"Backoffice\n(gestão de cursos)"| nexora
+  suporte-->|"Backoffice\n(consultas e suporte)"| nexora
+
+  nexora -->|"Tráfego passa por"| cf
+  nexora -->|"Valida JWT via\nHTTPS · OIDC"| kc
+  nexora -->|"Telemetria\nOTEL gRPC"| obs
+
+  style Usuarios fill:#0d1117,stroke:#21262d,color:#e6edf3,font-weight:700
+  style Externos fill:#0d1117,stroke:#21262d,color:#e6edf3,font-weight:700
+    </div>
+    <div class="legend">
+      <div class="leg"><div class="dot" style="background:#1a4a9e"></div>Usuários (Person)</div>
+      <div class="leg"><div class="dot" style="background:#166534"></div>Sistema principal (Nexora)</div>
+      <div class="leg"><div class="dot" style="background:#92400e"></div>Sistemas externos</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ C2 ══════════════════ -->
+<section id="c2">
+  <div class="sec-header">
+    <span class="badge b2">Nível 2</span>
+    <div>
+      <div class="sec-title">Containers da Plataforma</div>
+      <div class="sec-desc">Aplicações, bancos de dados, filas e serviços que compõem a plataforma. Cada container é um processo deployável independente.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="mermaid">
+flowchart TB
+  classDef person   fill:#0d2d6e,stroke:#1a4a9e,color:#c8deff,font-size:12px
+  classDef frontend fill:#0a3060,stroke:#1d4ed8,color:#bfdbfe,font-size:12px
+  classDef api      fill:#064e3b,stroke:#047857,color:#a7f3d0,font-size:12px
+  classDef db       fill:#1c1400,stroke:#b45309,color:#fde68a,font-size:12px
+  classDef queue    fill:#2d0707,stroke:#b91c1c,color:#fecaca,font-size:12px
+  classDef iam      fill:#2e1065,stroke:#6d28d9,color:#ddd6fe,font-size:12px
+  classDef infra    fill:#1a1a1a,stroke:#374151,color:#d1d5db,font-size:12px
+  classDef external fill:#2d1b00,stroke:#92400e,color:#fde68a,font-size:12px
+
+  aluno(["👤 Aluno / Professor"]):::person
+  admin(["👤 Admin / Atendimento"]):::person
+  cf["☁️ Cloudflare\nDNS · WAF · CDN"]:::external
+
+  subgraph GKE["☸️  GKE — Google Kubernetes Engine"]
+    subgraph FE["Frontend Layer"]
+      portal["🖥️ Portal Acadêmico\nReact / Next.js\nAlunos e professores"]:::frontend
+      back["🖥️ Backoffice\nReact / Next.js\nAdmin e atendimento"]:::frontend
+    end
+
+    ingress["⚡ Ingress / Load Balancer\nGKE Ingress + TLS"]:::infra
+
+    subgraph API["API Layer"]
+      api["🚀 Nexora Academy API\nNestJS + TypeScript\nMonólito Modular MVC + DDD"]:::api
+      worker["⚙️ Async Worker\nNestJS + RabbitMQ Consumer\nEventos assíncronos"]:::api
+    end
+
+    subgraph DATA["Data Layer"]
+      mongo[("🍃 MongoDB\nDados de negócio\ncursos · turmas · inscrições")]:::db
+      redis[("⚡ Redis\nCache · Rate Limiting\nSessão e leitura rápida")]:::db
+      rabbit[/"🐰 RabbitMQ\nFila de eventos\nde domínio"\]:::queue
+    end
+
+    subgraph IAM["IAM Layer"]
+      kc["🔑 Keycloak\nAutenticação OAuth2/OIDC\nGestão de papéis e sessão"]:::iam
+      pg[("🐘 PostgreSQL\nBase do Keycloak\nrealms · users · tokens")]:::db
+    end
+  end
+
+  signoz["📊 SigNoz + OpenTelemetry\nObservabilidade"]:::external
+
+  aluno  -->|HTTPS| portal
+  admin  -->|HTTPS| back
+  portal -->|HTTPS| cf
+  back   -->|HTTPS| cf
+  cf     -->|HTTPS| ingress
+  ingress-->|HTTP| api
+
+  portal -->|OIDC| kc
+  back   -->|OIDC| kc
+  api    -->|Valida JWT| kc
+  kc     -->|JDBC| pg
+
+  api    -->|Mongoose| mongo
+  api    -->|ioredis| redis
+  api    -->|AMQP| rabbit
+  worker -->|AMQP consume| rabbit
+  worker -->|Mongoose| mongo
+
+  api    -->|OTEL gRPC| signoz
+  worker -->|OTEL gRPC| signoz
+
+  style GKE  fill:#0d1117,stroke:#30363d,color:#e6edf3,font-weight:700
+  style FE   fill:#0a1628,stroke:#1d4ed8,color:#bfdbfe,font-weight:700
+  style API  fill:#021a0e,stroke:#047857,color:#a7f3d0,font-weight:700
+  style DATA fill:#0c0800,stroke:#b45309,color:#fde68a,font-weight:700
+  style IAM  fill:#150830,stroke:#6d28d9,color:#ddd6fe,font-weight:700
+    </div>
+    <div class="legend">
+      <div class="leg"><div class="dot" style="background:#1d4ed8"></div>Frontends</div>
+      <div class="leg"><div class="dot" style="background:#047857"></div>API / Worker</div>
+      <div class="leg"><div class="dot" style="background:#b45309"></div>Bancos de dados</div>
+      <div class="leg"><div class="dot" style="background:#b91c1c"></div>Fila (RabbitMQ)</div>
+      <div class="leg"><div class="dot" style="background:#6d28d9"></div>IAM (Keycloak)</div>
+      <div class="leg"><div class="dot" style="background:#92400e"></div>Externos / Observabilidade</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ C3 ══════════════════ -->
+<section id="c3">
+  <div class="sec-header">
+    <span class="badge b3">Nível 3</span>
+    <div>
+      <div class="sec-title">Componentes da Nexora API</div>
+      <div class="sec-desc">Módulos internos do monólito NestJS organizados por camadas: Presentation → Application → Domain → Infrastructure.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="mermaid">
+flowchart TB
+  classDef ctrl  fill:#0a2744,stroke:#1d6dad,color:#bfdbfe,font-size:12px
+  classDef uc    fill:#052e16,stroke:#15803d,color:#bbf7d0,font-size:12px
+  classDef dom   fill:#2e1065,stroke:#6d28d9,color:#ddd6fe,font-size:12px
+  classDef repo  fill:#431407,stroke:#c2410c,color:#fed7aa,font-size:12px
+  classDef infra fill:#1c1400,stroke:#a16207,color:#fde68a,font-size:12px
+  classDef shared fill:#1a1a2e,stroke:#4c4f8f,color:#c7d2fe,font-size:12px
+  classDef ext   fill:#1a1a1a,stroke:#374151,color:#9ca3af,font-size:12px
+
+  ext_kc["🔑 Keycloak"]:::ext
+  ext_db["🍃 MongoDB"]:::ext
+  ext_redis["⚡ Redis"]:::ext
+  ext_rabbit["🐰 RabbitMQ"]:::ext
+  ext_obs["📊 SigNoz"]:::ext
+
+  subgraph SHARED["🔧 Shared — Infraestrutura Transversal"]
+    direction LR
+    auth_mod["Auth Module\nJWT Guard + Passport\nValida token e extrai role"]:::shared
+    cache_mod["Cache Module\nioredis · TTL por op."]:::shared
+    msg_mod["Messaging Module\nAMQP Publisher\nConsumers assíncronos"]:::shared
+    obs_mod["Observability Module\nOTEL Interceptors\nTraces + Métricas"]:::shared
+  end
+
+  subgraph USERS["👥 Module: Users"]
+    direction TB
+    uc1["UsersController\nCRUD + count + findByName"]:::ctrl
+    ua1["User Use Cases\nCreate · FindAll · FindById\nFindByName · Update · Delete · Count"]:::uc
+    ud1["UserProfile Entity\nid · identityId · name · email\nrole · status"]:::dom
+    ur1[/"IUserRepository\nContrato de repositório"/]:::repo
+    ui1["MongoUserRepository\nUserSchema ↔ UserProfile\nMapper + Mongoose"]:::infra
+  end
+
+  subgraph COURSES["📚 Module: Courses"]
+    direction TB
+    cc1["CoursesController\nCRUD + count + findByName"]:::ctrl
+    ca1["Course Use Cases\nCreate · FindAll · FindById\nFindByName · Update · Delete · Count"]:::uc
+    cd1["Course Entity\nid · title · slug · category\ntags · status(DRAFT/PUBLISHED/ARCHIVED)"]:::dom
+    cr1[/"ICourseRepository\nContrato de repositório"/]:::repo
+    ci1["MongoCourseRepository\nCourseSchema ↔ Course\nMapper + Mongoose"]:::infra
+  end
+
+  subgraph CLASSROOMS["🏫 Module: Classrooms"]
+    direction TB
+    lc1["ClassroomsController\nCRUD + count"]:::ctrl
+    la1["Classroom Use Cases\nOpenClassroom · FindAll\nFindById · Update · Delete · Count"]:::uc
+    ld1["Classroom Entity\nid · courseId · name · teacherId\ncapacity · enrollmentWindow · status"]:::dom
+    lr1[/"IClassroomRepository\nContrato de repositório"/]:::repo
+    li1["MongoClassroomRepository\nClassroomSchema ↔ Classroom\nMapper + Mongoose"]:::infra
+  end
+
+  subgraph ENROLLMENTS["📝 Module: Enrollments"]
+    direction TB
+    ec1["EnrollmentsController\nCRUD + cancel + count"]:::ctrl
+    ea1["Enrollment Use Cases\nEnrollStudent · FindAll · FindById\nFindByName · Cancel · Count"]:::uc
+    ed1["Enrollment Entity\nid · classroomId · courseId · studentId\nstatus(ACTIVE/CANCELLED) · enrolledAt"]:::dom
+    er1[/"IEnrollmentRepository\nContrato de repositório"/]:::repo
+    ei1["MongoEnrollmentRepository\nEnrollmentSchema ↔ Enrollment\nMapper + regras de capacidade"]:::infra
+  end
+
+  %% Shared → Módulos
+  auth_mod --> uc1 & cc1 & lc1 & ec1
+
+  %% Users flow
+  uc1 --> ua1 --> ud1
+  ua1 --> ur1
+  ui1 --> ur1
+  ui1 --> ext_db
+
+  %% Courses flow
+  cc1 --> ca1 --> cd1
+  ca1 --> cr1
+  ci1 --> cr1
+  ci1 --> ext_db
+
+  %% Classrooms flow
+  lc1 --> la1 --> ld1
+  la1 --> lr1
+  li1 --> lr1
+  li1 --> ext_db
+
+  %% Enrollments flow
+  ec1 --> ea1 --> ed1
+  ea1 --> er1
+  ei1 --> er1
+  ei1 --> ext_db
+  ea1 --> cache_mod --> ext_redis
+  ea1 --> msg_mod --> ext_rabbit
+
+  %% Observability
+  obs_mod --> ext_obs
+  auth_mod --> ext_kc
+
+  style SHARED fill:#0d0d1f,stroke:#4c4f8f,color:#c7d2fe,font-weight:700
+  style USERS fill:#040d1a,stroke:#1d6dad,color:#bfdbfe,font-weight:700
+  style COURSES fill:#020d07,stroke:#15803d,color:#bbf7d0,font-weight:700
+  style CLASSROOMS fill:#16060e,stroke:#9d174d,color:#fbcfe8,font-weight:700
+  style ENROLLMENTS fill:#0c0800,stroke:#a16207,color:#fde68a,font-weight:700
+    </div>
+    <div class="legend">
+      <div class="leg"><div class="dot" style="background:#1d6dad"></div>Controllers (Presentation)</div>
+      <div class="leg"><div class="dot" style="background:#15803d"></div>Use Cases (Application)</div>
+      <div class="leg"><div class="dot" style="background:#6d28d9"></div>Entities (Domain)</div>
+      <div class="leg"><div class="dot" style="background:#c2410c"></div>Repository Contracts (Domain)</div>
+      <div class="leg"><div class="dot" style="background:#a16207"></div>Implementations (Infrastructure)</div>
+      <div class="leg"><div class="dot" style="background:#4c4f8f"></div>Shared (transversal)</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ C4 ══════════════════ -->
+<section id="c4">
+  <div class="sec-header">
+    <span class="badge b4">Nível 4</span>
+    <div>
+      <div class="sec-title">Modelo de Domínio — Código</div>
+      <div class="sec-desc">Entidades de domínio, enumerações de estado, contratos de repositório e relacionamentos entre os agregados da Nexora Academy.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="mermaid">
+classDiagram
+  direction TB
+
+  class UserProfile {
+    +String id
+    +String identityId
+    +String name
+    +String email
+    +UserRole role
+    +UserStatus status
+    +String description
+    +String subject
+    +Date createdAt
+    +Date updatedAt
+  }
+
+  class UserRole {
+    <<enumeration>>
+    STUDENT
+    TEACHER
+    ADMIN
+    SUPPORT
+  }
+
+  class UserStatus {
+    <<enumeration>>
+    ACTIVE
+    INACTIVE
+  }
+
+  class Course {
+    +String id
+    +String title
+    +String slug
+    +String description
+    +String category
+    +String[] tags
+    +CourseStatus status
+    +Date createdAt
+    +Date updatedAt
+  }
+
+  class CourseStatus {
+    <<enumeration>>
+    DRAFT
+    PUBLISHED
+    ARCHIVED
+  }
+
+  class Classroom {
+    +String id
+    +String courseId
+    +String courseTitle
+    +String name
+    +String teacherId
+    +String teacherName
+    +Number capacity
+    +Date enrollmentStart
+    +Date enrollmentEnd
+    +Date startAt
+    +Date endAt
+    +ClassroomStatus status
+    +Date createdAt
+    +Date updatedAt
+    +isEnrollmentOpen() Boolean
+    +hasCapacity(count) Boolean
+  }
+
+  class ClassroomStatus {
+    <<enumeration>>
+    OPEN
+    CLOSED
+    IN_PROGRESS
+    FINISHED
+  }
+
+  class Enrollment {
+    +String id
+    +String classroomId
+    +String classroomName
+    +String courseId
+    +String courseTitle
+    +String studentId
+    +String studentName
+    +EnrollmentStatus status
+    +Date enrolledAt
+    +Date cancelledAt
+    +Date createdAt
+    +Date updatedAt
+    +cancel() void
+  }
+
+  class EnrollmentStatus {
+    <<enumeration>>
+    ACTIVE
+    CANCELLED
+  }
+
+  class IUserRepository {
+    <<interface>>
+    +create(user) Promise~UserProfile~
+    +findAll(filter) Promise~UserProfile[]~
+    +findById(id) Promise~UserProfile~
+    +findByEmail(email) Promise~UserProfile~
+    +findByName(name) Promise~UserProfile[]~
+    +update(id, data) Promise~UserProfile~
+    +delete(id) Promise~void~
+    +count(filter) Promise~Number~
+  }
+
+  class ICourseRepository {
+    <<interface>>
+    +create(course) Promise~Course~
+    +findAll(filter) Promise~Course[]~
+    +findById(id) Promise~Course~
+    +findByName(name) Promise~Course[]~
+    +update(id, data) Promise~Course~
+    +delete(id) Promise~void~
+    +count(filter) Promise~Number~
+  }
+
+  class IClassroomRepository {
+    <<interface>>
+    +create(classroom) Promise~Classroom~
+    +findAll(filter) Promise~Classroom[]~
+    +findById(id) Promise~Classroom~
+    +findByCourseId(id) Promise~Classroom[]~
+    +update(id, data) Promise~Classroom~
+    +delete(id) Promise~void~
+    +count(filter) Promise~Number~
+  }
+
+  class IEnrollmentRepository {
+    <<interface>>
+    +create(enrollment) Promise~Enrollment~
+    +findAll(filter) Promise~Enrollment[]~
+    +findById(id) Promise~Enrollment~
+    +findByName(name) Promise~Enrollment[]~
+    +findByStudent(studentId) Promise~Enrollment[]~
+    +countByClassroom(classroomId) Promise~Number~
+    +cancel(id) Promise~Enrollment~
+    +count(filter) Promise~Number~
+  }
+
+  %% Relacionamentos de domínio
+  Course       "1" --> "0..*" Classroom  : possui turmas
+  Classroom    "1" --> "0..*" Enrollment : contém inscrições
+  UserProfile  "1" --> "0..*" Enrollment : realiza (STUDENT)
+  UserProfile  "1" --> "0..*" Classroom  : leciona em (TEACHER)
+
+  %% Enum bindings
+  UserProfile --> UserRole      : usa
+  UserProfile --> UserStatus    : usa
+  Course      --> CourseStatus  : usa
+  Classroom   --> ClassroomStatus : usa
+  Enrollment  --> EnrollmentStatus : usa
+
+  %% Contratos
+  IUserRepository       ..> UserProfile  : retorna
+  ICourseRepository     ..> Course       : retorna
+  IClassroomRepository  ..> Classroom    : retorna
+  IEnrollmentRepository ..> Enrollment   : retorna
+    </div>
+    <div class="legend">
+      <div class="leg"><div class="dot" style="background:#1d6dad"></div>Entidades de domínio (Aggregates)</div>
+      <div class="leg"><div class="dot" style="background:#15803d"></div>Contratos (Interfaces de repositório)</div>
+      <div class="leg"><div class="dot" style="background:#6d28d9"></div>Enumerações de estado</div>
+      <div class="leg"><div class="dot" style="background:#c2410c"></div>Relacionamentos entre agregados</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Nexora Academy · Documentação Arquitetural · C4 Model · v1.0</p>
+  <p>Pós-graduação em <strong>Arquitetura de Software — XP Educação</strong> · 2026</p>
+</footer>
+
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'dark',
+    securityLevel: 'loose',
+    flowchart: { useMaxWidth: false, htmlLabels: true, curve: 'basis' },
+    themeVariables: {
+      darkMode: true,
+      background: '#161b22',
+      primaryColor: '#1e3a5f',
+      primaryTextColor: '#e6edf3',
+      primaryBorderColor: '#58a6ff',
+      lineColor: '#8b949e',
+      secondaryColor: '#1c2333',
+      tertiaryColor: '#0d1117',
+      fontSize: '14px',
+      nodeBorder: '#30363d',
+      clusterBkg: '#0d1117',
+      clusterBorder: '#30363d',
+      titleColor: '#e6edf3',
+      edgeLabelBackground: '#161b22',
+      classText: '#e6edf3'
+    }
+  });
+</script>
+</body>
+</html>

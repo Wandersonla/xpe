@@ -1,0 +1,34 @@
+flowchart LR
+  subgraph Borda
+    CF[Cloudflare\nDNS / WAF / CDN]
+  end
+
+  subgraph Aplicacoes
+    PA[Portal Acadêmico\nFrontend Web]
+    BA[Backoffice\nFrontend Web]
+  end
+
+  subgraph GKE
+    ING[Ingress / Load Balancer]
+    API[NestJS API\nMonólito modular]
+  end
+
+  subgraph Dados_e_Servicos
+    KC[Keycloak]
+    PG[(PostgreSQL)]
+    MDB[(MongoDB)]
+    OBS[SigNoz / OTEL]
+  end
+
+  PA --> CF
+  BA --> CF
+  CF --> ING
+  ING --> API
+
+  PA -. login .-> KC
+  BA -. login .-> KC
+  API --> KC
+  KC --> PG
+
+  API --> MDB
+  API --> OBS

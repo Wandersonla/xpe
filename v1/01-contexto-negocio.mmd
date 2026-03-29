@@ -1,0 +1,28 @@
+flowchart LR
+  subgraph Usuarios
+    AL[Aluno]
+    PR[Professor]
+    AD[Administrador]
+    AT[Atendimento]
+  end
+
+  PA[Portal Acadêmico]
+  BA[Backoffice Administrativo]
+  API[Nexora Academy API\nNestJS + MVC]
+  KC[Keycloak]
+  CF[Cloudflare\nDNS / WAF / CDN]
+  OBS[SigNoz + OpenTelemetry]
+
+  AL --> PA
+  PR --> PA
+  AD --> BA
+  AT --> BA
+
+  PA --> CF
+  BA --> CF
+  CF --> API
+
+  PA -. autenticação .-> KC
+  BA -. autenticação .-> KC
+  API --> KC
+  API --> OBS

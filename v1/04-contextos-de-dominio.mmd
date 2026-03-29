@@ -1,0 +1,16 @@
+flowchart LR
+  IAM[Identity & Access]
+  UMG[User Management]
+  CAT[Catalog]
+  AOF[Academic Offering]
+  ENR[Enrollment]
+  SUP[Support & Query]
+
+  IAM --> UMG
+  CAT --> AOF
+  UMG --> AOF
+  UMG --> ENR
+  AOF --> ENR
+  ENR --> SUP
+  CAT --> SUP
+  UMG --> SUP
