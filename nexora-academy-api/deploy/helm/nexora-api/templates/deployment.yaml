@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "nexora-api.fullname" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "nexora-api.fullname" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "nexora-api.fullname" . }}
+    spec:
+      containers:
+        - name: api
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.targetPort }}
+          env:
+            - name: NODE_ENV
+              value: {{ .Values.env.NODE_ENV | quote }}
+            - name: PORT
+              value: {{ .Values.env.PORT | quote }}
+            - name: API_PREFIX
+              value: {{ .Values.env.API_PREFIX | quote }}
+            - name: KEYCLOAK_ISSUER
+              value: {{ .Values.env.KEYCLOAK_ISSUER | quote }}
+            - name: KEYCLOAK_AUDIENCE
+              value: {{ .Values.env.KEYCLOAK_AUDIENCE | quote }}
+            - name: MONGODB_URI
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.secretEnv.MONGODB_URI.name }}
+                  key: {{ .Values.secretEnv.MONGODB_URI.key }}
+            - name: REDIS_URL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.secretEnv.REDIS_URL.name }}
+                  key: {{ .Values.secretEnv.REDIS_URL.key }}
+            - name: RABBITMQ_URL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.secretEnv.RABBITMQ_URL.name }}
+                  key: {{ .Values.secretEnv.RABBITMQ_URL.key }}
+          readinessProbe:
+            httpGet:
+              path: /{{ .Values.env.API_PREFIX }}/health
+              port: {{ .Values.service.targetPort }}
+            initialDelaySeconds: 10
+            periodSeconds: 15
+          livenessProbe:
+            httpGet:
+              path: /{{ .Values.env.API_PREFIX }}/health
+              port: {{ .Values.service.targetPort }}
+            initialDelaySeconds: 20
+            periodSeconds: 20
+          resources:
+{{ toYaml .Values.resources | indent 12 }}

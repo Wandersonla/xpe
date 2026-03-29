@@ -1,0 +1,16 @@
+.docker
+node_modules
+dist
+coverage
+.nyc_output
+.env
+.env.local
+*.log
+.DS_Store
+.idea
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+pnpm-lock.yaml
+yarn.lock
+coverage-robot
