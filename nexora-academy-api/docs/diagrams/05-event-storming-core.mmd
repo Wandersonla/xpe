@@ -1,0 +1,21 @@
+flowchart LR
+  ADM[Administrador] --> CMD1[Cadastrar Curso]
+  CMD1 --> EVT1[CursoCadastrado]
+  EVT1 --> CMD2[Publicar Curso]
+  CMD2 --> EVT2[CursoPublicado]
+
+  ADM --> CMD3[Abrir Turma]
+  CMD3 --> EVT3[TurmaAberta]
+
+  ADM --> CMD4[Vincular Professor]
+  CMD4 --> EVT4[ProfessorVinculadoATurma]
+  EVT4 --> POL1[Professor passa a ver a turma]
+
+  AL[Aluno] --> CMD5[Realizar Inscrição]
+  CMD5 --> EVT5[InscricaoRealizada]
+  EVT5 --> POL2[Atualizar vagas]
+  EVT5 --> POL3[Registrar auditoria]
+
+  ADM --> CMD6[Encerrar Inscrições]
+  CMD6 --> EVT6[InscricoesEncerradas]
+  EVT6 --> POL4[Bloquear novas inscrições]

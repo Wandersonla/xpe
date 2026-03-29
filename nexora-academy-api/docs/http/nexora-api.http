@@ -1,0 +1,50 @@
+@baseUrl = http://localhost:3000/api/v1
+@token = {{$dotenv TOKEN}}
+
+### Health
+GET {{baseUrl}}/health
+
+### Public - list courses
+GET {{baseUrl}}/courses
+
+### Public - list classrooms
+GET {{baseUrl}}/classrooms
+
+### Create user profile
+POST {{baseUrl}}/users
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "identityId": "keycloak-sub-marina",
+  "name": "Marina Soares",
+  "email": "marina@nexora.com",
+  "role": "support",
+  "status": "active"
+}
+
+### Create course
+POST {{baseUrl}}/courses
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "Arquitetura de Software com NestJS",
+  "description": "Curso focado em APIs, MVC e DDD leve.",
+  "category": "arquitetura",
+  "tags": ["nestjs", "ddd", "mongodb"],
+  "status": "draft"
+}
+
+### Open enrollment
+POST {{baseUrl}}/classrooms/{{classroomId}}/open-enrollment
+Authorization: Bearer {{token}}
+
+### Student self-enrollment
+POST {{baseUrl}}/enrollments
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "classroomId": "{{classroomId}}"
+}

@@ -1,0 +1,14 @@
+<svg width="1200" height="400" viewBox="0 0 1200 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="400" rx="28" fill="#F8FAFC"/>
+  <g transform="translate(72,72)">
+    <rect x="0" y="0" width="256" height="256" rx="52" fill="#0F172A"/>
+    <path d="M46 182V74C46 67.3726 51.3726 62 58 62H86C91.0872 62 95.7348 64.8744 98 69.4286L128 129.5L158 69.4286C160.265 64.8744 164.913 62 170 62H198C204.627 62 210 67.3726 210 74V182" stroke="#F8FAFC" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M84 192H172" stroke="#22C55E" stroke-width="18" stroke-linecap="round"/>
+    <path d="M168 98L212 128L168 158V98Z" fill="#7C3AED"/>
+  </g>
+  <g transform="translate(390,110)">
+    <text x="0" y="92" font-family="Arial, Helvetica, sans-serif" font-size="96" font-weight="700" fill="#0F172A">NEXORA</text>
+    <text x="4" y="150" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="600" fill="#2563EB">ACADEMY</text>
+    <text x="4" y="206" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="400" fill="#475569">Aprender. Evoluir. Transformar.</text>
+  </g>
+</svg>
