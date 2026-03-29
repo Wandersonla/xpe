@@ -1,0 +1,23 @@
+sequenceDiagram
+  actor Aluno
+  participant Portal as Portal Acadêmico
+  participant KC as Keycloak
+  participant API as NestJS API
+  participant ENR as EnrollmentsService
+  participant CLA as Classroom Repository
+  participant MDB as MongoDB
+
+  Aluno->>Portal: solicita inscrição
+  Portal->>KC: verifica sessão / token
+  KC-->>Portal: token válido
+  Portal->>API: POST /enrollments
+  API->>ENR: executar serviço
+  ENR->>CLA: obter turma e validar janela/capacidade
+  CLA->>MDB: buscar turma
+  MDB-->>CLA: turma encontrada
+  CLA-->>ENR: turma válida
+  ENR->>MDB: persistir inscrição
+  MDB-->>ENR: inscrição criada
+  ENR-->>API: retorno de sucesso
+  API-->>Portal: 201 Created
+  Portal-->>Aluno: confirmação da inscrição
