@@ -1,0 +1,48 @@
+replicaCount: 2
+
+image:
+  repository: us-central1-docker.pkg.dev/PROJECT_ID/nexora/nexora-academy-api
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 3000
+
+ingress:
+  enabled: true
+  className: gce
+  annotations: {}
+  hosts:
+    - host: api.nexora.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+env:
+  NODE_ENV: production
+  PORT: "3000"
+  API_PREFIX: api/v1
+  KEYCLOAK_ISSUER: https://sso.nexora.example.com/realms/nexora
+  KEYCLOAK_AUDIENCE: nexora-api
+
+secretEnv:
+  MONGODB_URI:
+    name: nexora-api-secrets
+    key: mongodb-uri
+  REDIS_URL:
+    name: nexora-api-secrets
+    key: redis-url
+  RABBITMQ_URL:
+    name: nexora-api-secrets
+    key: rabbitmq-url
